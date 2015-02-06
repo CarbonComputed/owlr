@@ -19,7 +19,16 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
+    
+    // Checks is update location should be called (30 min have passed)
+    func timerGPS(){
+        
+    }
+    
+    func swipe(){
+        
+    }
+    
+    
 }
 
