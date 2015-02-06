@@ -12,6 +12,18 @@ import SwifteriOS
 
 class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDelegate {
     @IBOutlet weak var imageView: UIImageView!
+<<<<<<< Updated upstream
+=======
+
+    // vars for the swip func: ali did this
+    var photoQueue : [AnyObject] = []
+    var hold : [AnyObject] = []
+    var CurrentImage : AnyObject
+    
+    
+    //end
+
+>>>>>>> Stashed changes
     @IBOutlet weak var textView: UITextView!
     
     var locationManager:CLLocationManager!
@@ -109,6 +121,27 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
         }
     }
 
+<<<<<<< Updated upstream
+=======
+    func photosDidLoad(statuses: [JSONValue]?){
+        
+    }
+    // moves current image to a backup array, and then sets the first element in array of photoqueue to the current image
+    func swipe(){
+        if !photoQueue[0].isEmpty  {  // if photoqueue isnt empty
+            hold.append(photoQueue[0]) // first element in photoqueue is added to the hold array
+            photoQueue.removeAtIndex(0) // removes the first element in photoqueue
+            CurrentImage = photoQueue[0] // current image pointer is set equal to the first element in photoqueue array
+            
+        }
+        else
+        {
+            photoQueue = hold // since photoqueu should be empty, then the backup hold array will be replaced for photoqueue
+            hold = []
+        }
+        
+    }
+>>>>>>> Stashed changes
     
     func updateText(caption: NSString ){
         textView.text = caption
