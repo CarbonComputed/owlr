@@ -12,13 +12,11 @@ import SwifteriOS
 
 class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDelegate {
     @IBOutlet weak var imageView: UIImageView!
-
-
-
-
     @IBOutlet weak var textView: UITextView!
+    
     var locationManager:CLLocationManager!
     var isImage1:Bool = false
+    
     let apiController = APIController()
     
     override func viewDidLoad() {
@@ -32,11 +30,10 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
         apiController.delegate = self
         // Do any additional setup after loading the view, typically from a nib.
         
-        // Swipe left
+        // Swipe left set up
         var swipeLeft = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
         swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
         self.view.addGestureRecognizer(swipeLeft)
-        
         
     }
     
@@ -90,17 +87,17 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
             
             switch swipeGesture.direction {
             case UISwipeGestureRecognizerDirection.Left:
-                swap()
+                swap( UIImage(named:"checkers.png")! )
             default:
                 break
             }
         }
     }
     
-    func swap(){
-        let toImage = UIImage(named:"checkers.png")
+    func swap( nextImage: UIImage){
+        let toImage = nextImage
         UIView.transitionWithView(self.imageView,
-            duration:2,
+            duration:0.6,
             options: .TransitionCrossDissolve,
             animations: { self.imageView.image = toImage },
             completion: nil)
