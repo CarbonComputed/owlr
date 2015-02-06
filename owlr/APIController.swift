@@ -14,7 +14,7 @@ protocol APIControllerProtocol {
 }
 
 class APIController  {
-    let delegate: APIControllerProtocol?
+    var delegate: APIControllerProtocol?
     
     let swifter = Swifter(consumerKey: "tkbaXySRl6Fd8XictSd9S9vlr", consumerSecret: "2M87groo1SJlNAQti2JLdToZiD6IGUQce5ykOk50UIkyz8gxKC")
     

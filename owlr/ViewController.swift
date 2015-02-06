@@ -29,12 +29,15 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
         self.locationManager.distanceFilter  = 10.0
         locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
+        apiController.delegate = self
         // Do any additional setup after loading the view, typically from a nib.
         
         // Swipe left
         var swipeLeft = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
         swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
         self.view.addGestureRecognizer(swipeLeft)
+        
+        
     }
     
     func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
