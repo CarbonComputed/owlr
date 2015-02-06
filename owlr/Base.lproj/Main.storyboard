@@ -21,7 +21,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             </imageView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" editable="NO" text="Image Caption and #hashtags" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rbQ-Wu-6UX">
-                                <rect key="frame" x="16" y="501" width="288" height="59"/>
+                                <rect key="frame" x="16" y="515" width="288" height="45"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -31,7 +31,7 @@
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="mhs-JT-VW0" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="0Ed-Lk-3gC"/>
-                            <constraint firstItem="HgN-EK-kCi" firstAttribute="top" secondItem="rbQ-Wu-6UX" secondAttribute="bottom" constant="8" symbolic="YES" id="1DF-eN-pg8"/>
+                            <constraint firstItem="rbQ-Wu-6UX" firstAttribute="top" secondItem="7GY-To-GfV" secondAttribute="bottom" constant="481" id="9ki-Ed-uG3"/>
                             <constraint firstItem="mhs-JT-VW0" firstAttribute="bottom" secondItem="HgN-EK-kCi" secondAttribute="top" id="GUO-BZ-jPm"/>
                             <constraint firstAttribute="trailing" secondItem="mhs-JT-VW0" secondAttribute="trailing" id="Ggf-jw-Mbs"/>
                             <constraint firstItem="rbQ-Wu-6UX" firstAttribute="centerX" secondItem="mhs-JT-VW0" secondAttribute="centerX" id="pHD-qe-Vom"/>
@@ -43,7 +43,7 @@
                         </connections>
                     </view>
                     <connections>
-                        <outlet property="imageView1" destination="mhs-JT-VW0" id="nu7-dL-M15"/>
+                        <outlet property="imageView" destination="mhs-JT-VW0" id="DkE-uK-SuR"/>
                         <outlet property="textView" destination="rbQ-Wu-6UX" id="r4j-5U-Xna"/>
                     </connections>
                 </viewController>

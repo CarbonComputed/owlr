@@ -3,17 +3,17 @@
 //  owlr
 //
 //  Created by Kevin Carbone on 2/5/15.
-//  Copyright (c) 2015 Kevin Carbone. All rights reserved.
+//  Copyright (c) 2015 Kevin Carbone Natasha Martinez Ali Batayneh. All rights reserved.
 //
 
 import UIKit
 import CoreLocation
 
 class ViewController: UIViewController,CLLocationManagerDelegate {
-    @IBOutlet weak var imageView1: UIImageView!
-
+    @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var textView: UITextView!
     var locationManager:CLLocationManager!
+    var isImage1:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +25,10 @@ class ViewController: UIViewController,CLLocationManagerDelegate {
         locationManager.startUpdatingLocation()
         // Do any additional setup after loading the view, typically from a nib.
         
-        
+        // Swipe left
+        var swipeLeft = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
+        swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
+        self.view.addGestureRecognizer(swipeLeft)
     }
     
     func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
@@ -69,13 +72,26 @@ class ViewController: UIViewController,CLLocationManagerDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    // Checks is update location should be called (30 min have passed)
-    func timerGPS(){
+    func respondToSwipeGesture(gesture: UIGestureRecognizer) {
         
+        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
+            
+            switch swipeGesture.direction {
+            case UISwipeGestureRecognizerDirection.Left:
+                swap()
+            default:
+                break
+            }
+        }
     }
     
-    func swipe(){
-        
+    func swap(){
+        let toImage = UIImage(named:"checkers.png")
+        UIView.transitionWithView(self.imageView,
+            duration:2,
+            options: .TransitionCrossDissolve,
+            animations: { self.imageView.image = toImage },
+            completion: nil)
     }
     
     func updateText(caption: NSString ){
@@ -83,7 +99,7 @@ class ViewController: UIViewController,CLLocationManagerDelegate {
     }
     
     func loadNewImage(nextImage: UIImage){
-        imageView1.image = nextImage
+        imageView.image = nextImage
     }
     
 }
