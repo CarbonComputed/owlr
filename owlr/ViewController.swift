@@ -26,7 +26,6 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         self.locationManager.distanceFilter  = 10.0
         locationManager.requestAlwaysAuthorization()
-        locationManager.startUpdatingLocation()
         apiController.delegate = self
         // Do any additional setup after loading the view, typically from a nib.
         
@@ -47,6 +46,8 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
             
         case .Authorized:
             println(".Authorized")
+            locationManager.startUpdatingLocation()
+
             break
             
         case .Denied:
