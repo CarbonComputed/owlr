@@ -17,6 +17,8 @@
 		70D334221A83BAE3006A86D1 /* owlrTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D334211A83BAE3006A86D1 /* owlrTests.swift */; };
 		70D3342C1A8442E0006A86D1 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70D3342B1A8442E0006A86D1 /* CoreLocation.framework */; };
 		70D3343F1A844DB3006A86D1 /* SwifteriOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70D334381A844D83006A86D1 /* SwifteriOS.framework */; };
+		70D334451A847664006A86D1 /* checkers.png in Resources */ = {isa = PBXBuildFile; fileRef = 70D334431A847664006A86D1 /* checkers.png */; };
+		70D334461A847664006A86D1 /* imageNotFound.png in Resources */ = {isa = PBXBuildFile; fileRef = 70D334441A847664006A86D1 /* imageNotFound.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +81,8 @@
 		70D334211A83BAE3006A86D1 /* owlrTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = owlrTests.swift; sourceTree = "<group>"; };
 		70D3342B1A8442E0006A86D1 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		70D3342D1A844D83006A86D1 /* Swifter.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Swifter.xcodeproj; path = "Swifter-master/Swifter.xcodeproj"; sourceTree = "<group>"; };
+		70D334431A847664006A86D1 /* checkers.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkers.png; sourceTree = "<group>"; };
+		70D334441A847664006A86D1 /* imageNotFound.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imageNotFound.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +128,7 @@
 		70D334051A83BAE2006A86D1 /* owlr */ = {
 			isa = PBXGroup;
 			children = (
+				70D334421A847664006A86D1 /* images */,
 				70D334081A83BAE2006A86D1 /* AppDelegate.swift */,
 				70D3340D1A83BAE2006A86D1 /* ViewController.swift */,
 				70D3340F1A83BAE3006A86D1 /* Main.storyboard */,
@@ -171,6 +176,15 @@
 				70D3343E1A844D83006A86D1 /* SwifterDemoMacTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		70D334421A847664006A86D1 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				70D334431A847664006A86D1 /* checkers.png */,
+				70D334441A847664006A86D1 /* imageNotFound.png */,
+			);
+			path = images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -300,6 +314,8 @@
 				70D334111A83BAE3006A86D1 /* Main.storyboard in Resources */,
 				70D334161A83BAE3006A86D1 /* LaunchScreen.xib in Resources */,
 				70D334131A83BAE3006A86D1 /* Images.xcassets in Resources */,
+				70D334451A847664006A86D1 /* checkers.png in Resources */,
+				70D334461A847664006A86D1 /* imageNotFound.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
