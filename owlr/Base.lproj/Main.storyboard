@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -9,32 +10,55 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="owlr" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                        <viewControllerLayoutGuide type="top" id="7GY-To-GfV"/>
+                        <viewControllerLayoutGuide type="bottom" id="HgN-EK-kCi"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c2s-Wa-sXT"/>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tjs-ky-Tho">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <gestureRecognizers/>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="0X0-Gt-CWW" appends="YES" id="tp1-Gb-LmF"/>
-                                </connections>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imageNotFound.png" translatesAutoresizingMaskIntoConstraints="NO" id="mhs-JT-VW0">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             </imageView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" editable="NO" text="Image Caption and #hashtags" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rbQ-Wu-6UX">
+                                <rect key="frame" x="16" y="501" width="288" height="59"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="mhs-JT-VW0" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="0Ed-Lk-3gC"/>
+                            <constraint firstItem="HgN-EK-kCi" firstAttribute="top" secondItem="rbQ-Wu-6UX" secondAttribute="bottom" constant="8" symbolic="YES" id="1DF-eN-pg8"/>
+                            <constraint firstItem="mhs-JT-VW0" firstAttribute="bottom" secondItem="HgN-EK-kCi" secondAttribute="top" id="GUO-BZ-jPm"/>
+                            <constraint firstAttribute="trailing" secondItem="mhs-JT-VW0" secondAttribute="trailing" id="Ggf-jw-Mbs"/>
+                            <constraint firstItem="rbQ-Wu-6UX" firstAttribute="centerX" secondItem="mhs-JT-VW0" secondAttribute="centerX" id="pHD-qe-Vom"/>
+                            <constraint firstItem="rbQ-Wu-6UX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="pSp-Uf-zlu"/>
+                            <constraint firstItem="mhs-JT-VW0" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="phm-HQ-9T7"/>
+                        </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="0X0-Gt-CWW" appends="YES" id="UjJ-ZM-DVe"/>
                         </connections>
                     </view>
+                    <connections>
+                        <outlet property="imageView1" destination="mhs-JT-VW0" id="nu7-dL-M15"/>
+                        <outlet property="textView" destination="rbQ-Wu-6UX" id="r4j-5U-Xna"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <swipeGestureRecognizer direction="right" id="0X0-Gt-CWW"/>
             </objects>
+            <point key="canvasLocation" x="44" y="125"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="imageNotFound.png" width="400" height="500"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
 </document>

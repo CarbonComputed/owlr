@@ -11,7 +11,9 @@ import CoreLocation
 import SwifteriOS
 
 class ViewController: UIViewController,CLLocationManagerDelegate {
+    @IBOutlet weak var imageView1: UIImageView!
 
+    @IBOutlet weak var textView: UITextView!
     var locationManager:CLLocationManager!
     let apiController = APIController()
     
@@ -24,6 +26,8 @@ class ViewController: UIViewController,CLLocationManagerDelegate {
         locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        
     }
     
     func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
@@ -78,6 +82,14 @@ class ViewController: UIViewController,CLLocationManagerDelegate {
     
     func swipe(){
         
+    }
+    
+    func updateText(caption: NSString ){
+        textView.text = caption
+    }
+    
+    func loadNewImage(nextImage: UIImage){
+        imageView1.image = nextImage
     }
     
 }
