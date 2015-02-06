@@ -8,10 +8,12 @@
 
 import UIKit
 import CoreLocation
+import SwifteriOS
 
 class ViewController: UIViewController,CLLocationManagerDelegate {
 
     var locationManager:CLLocationManager!
+    let apiController = APIController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +53,7 @@ class ViewController: UIViewController,CLLocationManagerDelegate {
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
         
         let location = locations.last as CLLocation
-        
+        apiController.loadImages(location.coordinate.latitude,long: location.coordinate.longitude,radius: 0.1,count: 25)
         println("didUpdateLocations:  \(location.coordinate.latitude), \(location.coordinate.longitude)")
         
     }
@@ -67,6 +69,10 @@ class ViewController: UIViewController,CLLocationManagerDelegate {
     
     // Checks is update location should be called (30 min have passed)
     func timerGPS(){
+        
+    }
+    
+    func photosDidLoad(statuses: [JSONValue]?){
         
     }
     
