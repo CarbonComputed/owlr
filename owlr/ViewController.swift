@@ -67,9 +67,12 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
         
         let location = locations.last as CLLocation
-        apiController.loadImages(location.coordinate.latitude,long: location.coordinate.longitude,radius: 0.1,count: 25)
-        println("didUpdateLocations:  \(location.coordinate.latitude), \(location.coordinate.longitude)")
-        
+        dispatch_async(dispatch_get_main_queue()) {
+            self.apiController.loadImages(location.coordinate.latitude,long: location.coordinate.longitude,radius: 0.1,count: 25)
+            println("didUpdateLocations:  \(location.coordinate.latitude), \(location.coordinate.longitude)")
+            
+        }
+
     }
     
     func locationManager(manager:CLLocationManager, didUpdateLocations locations:[AnyObject]) {
@@ -103,12 +106,11 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
             completion: nil)
     }
     func didReceiveAPIResults(statuses: [JSONValue]?){
-        println(statuses)
+        for status in statuses!{
+            println(status["text"])
+        }
     }
 
-    func photosDidLoad(statuses: [JSONValue]?){
-        
-    }
     
     func updateText(caption: NSString ){
         textView.text = caption
