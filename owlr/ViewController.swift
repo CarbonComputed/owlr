@@ -8,12 +8,14 @@
 
 import UIKit
 import CoreLocation
+import SwifteriOS
 
 class ViewController: UIViewController,CLLocationManagerDelegate {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var textView: UITextView!
     var locationManager:CLLocationManager!
     var isImage1:Bool = false
+    let apiController = APIController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,7 +60,7 @@ class ViewController: UIViewController,CLLocationManagerDelegate {
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
         
         let location = locations.last as CLLocation
-        
+        apiController.loadImages(location.coordinate.latitude,long: location.coordinate.longitude,radius: 0.1,count: 25)
         println("didUpdateLocations:  \(location.coordinate.latitude), \(location.coordinate.longitude)")
         
     }
@@ -92,6 +94,10 @@ class ViewController: UIViewController,CLLocationManagerDelegate {
             options: .TransitionCrossDissolve,
             animations: { self.imageView.image = toImage },
             completion: nil)
+    }
+
+    func photosDidLoad(statuses: [JSONValue]?){
+        
     }
     
     func updateText(caption: NSString ){
