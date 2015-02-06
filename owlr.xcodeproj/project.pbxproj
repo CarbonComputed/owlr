@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3F28F9081A84409100786801 /* APIController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F28F9071A84409100786801 /* APIController.swift */; };
+		3F28F90B1A844D2B00786801 /* imageNotFound.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F28F90A1A844D2B00786801 /* imageNotFound.png */; };
 		70D334091A83BAE2006A86D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D334081A83BAE2006A86D1 /* AppDelegate.swift */; };
 		70D3340C1A83BAE2006A86D1 /* owlr.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 70D3340A1A83BAE2006A86D1 /* owlr.xcdatamodeld */; };
 		70D3340E1A83BAE3006A86D1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D3340D1A83BAE2006A86D1 /* ViewController.swift */; };
@@ -30,6 +31,7 @@
 
 /* Begin PBXFileReference section */
 		3F28F9071A84409100786801 /* APIController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIController.swift; sourceTree = "<group>"; };
+		3F28F90A1A844D2B00786801 /* imageNotFound.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imageNotFound.png; sourceTree = "<group>"; };
 		70D334031A83BAE2006A86D1 /* owlr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = owlr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		70D334071A83BAE2006A86D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		70D334081A83BAE2006A86D1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -63,9 +65,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3F28F9091A844D1500786801 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				3F28F90A1A844D2B00786801 /* imageNotFound.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
 		70D333FA1A83BAE2006A86D1 = {
 			isa = PBXGroup;
 			children = (
+				3F28F9091A844D1500786801 /* Images */,
 				70D3342B1A8442E0006A86D1 /* CoreLocation.framework */,
 				70D334051A83BAE2006A86D1 /* owlr */,
 				70D3341E1A83BAE3006A86D1 /* owlrTests */,
@@ -202,6 +213,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F28F90B1A844D2B00786801 /* imageNotFound.png in Resources */,
 				70D334111A83BAE3006A86D1 /* Main.storyboard in Resources */,
 				70D334161A83BAE3006A86D1 /* LaunchScreen.xib in Resources */,
 				70D334131A83BAE3006A86D1 /* Images.xcassets in Resources */,
@@ -353,6 +365,7 @@
 				INFOPLIST_FILE = owlr/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -363,6 +376,7 @@
 				INFOPLIST_FILE = owlr/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
