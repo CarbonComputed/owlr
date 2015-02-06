@@ -17,21 +17,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="c2s-Wa-sXT">
-                                <constraints>
-                                    <constraint firstAttribute="height" id="5Yw-zm-16Z"/>
-                                    <constraint firstAttribute="width" id="yfC-Og-RJL"/>
-                                </constraints>
-                            </imageView>
-                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imageNotFound.png" translatesAutoresizingMaskIntoConstraints="NO" id="Tjs-ky-Tho">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imageNotFound.png" translatesAutoresizingMaskIntoConstraints="NO" id="mhs-JT-VW0">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <gestureRecognizers/>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="0X0-Gt-CWW" appends="YES" id="tp1-Gb-LmF"/>
-                                </connections>
                             </imageView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" text="Image Caption and #hashtags" translatesAutoresizingMaskIntoConstraints="NO" id="z8h-LM-Dba">
-                                <rect key="frame" x="16" y="497" width="288" height="57"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" editable="NO" text="Image Caption and #hashtags" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rbQ-Wu-6UX">
+                                <rect key="frame" x="16" y="501" width="288" height="59"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -40,20 +30,22 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="HgN-EK-kCi" firstAttribute="top" secondItem="z8h-LM-Dba" secondAttribute="bottom" constant="14" id="B5a-wM-5cK"/>
-                            <constraint firstItem="Tjs-ky-Tho" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Ual-ny-bby"/>
-                            <constraint firstItem="c2s-Wa-sXT" firstAttribute="top" secondItem="Tjs-ky-Tho" secondAttribute="top" id="hKv-zm-Vwj"/>
-                            <constraint firstItem="Tjs-ky-Tho" firstAttribute="bottom" secondItem="HgN-EK-kCi" secondAttribute="top" id="mop-yG-d4Q"/>
-                            <constraint firstItem="z8h-LM-Dba" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="nJc-lE-Zcl"/>
-                            <constraint firstAttribute="centerX" secondItem="z8h-LM-Dba" secondAttribute="centerX" id="q8s-nP-WvK"/>
-                            <constraint firstItem="c2s-Wa-sXT" firstAttribute="leading" secondItem="Tjs-ky-Tho" secondAttribute="leading" id="rgZ-aZ-oYL"/>
-                            <constraint firstItem="c2s-Wa-sXT" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="sHM-w9-m0O"/>
-                            <constraint firstAttribute="trailing" secondItem="Tjs-ky-Tho" secondAttribute="trailing" id="xtX-it-Va2"/>
+                            <constraint firstItem="mhs-JT-VW0" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="0Ed-Lk-3gC"/>
+                            <constraint firstItem="HgN-EK-kCi" firstAttribute="top" secondItem="rbQ-Wu-6UX" secondAttribute="bottom" constant="8" symbolic="YES" id="1DF-eN-pg8"/>
+                            <constraint firstItem="mhs-JT-VW0" firstAttribute="bottom" secondItem="HgN-EK-kCi" secondAttribute="top" id="GUO-BZ-jPm"/>
+                            <constraint firstAttribute="trailing" secondItem="mhs-JT-VW0" secondAttribute="trailing" id="Ggf-jw-Mbs"/>
+                            <constraint firstItem="rbQ-Wu-6UX" firstAttribute="centerX" secondItem="mhs-JT-VW0" secondAttribute="centerX" id="pHD-qe-Vom"/>
+                            <constraint firstItem="rbQ-Wu-6UX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="pSp-Uf-zlu"/>
+                            <constraint firstItem="mhs-JT-VW0" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="phm-HQ-9T7"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="0X0-Gt-CWW" appends="YES" id="UjJ-ZM-DVe"/>
                         </connections>
                     </view>
+                    <connections>
+                        <outlet property="imageView1" destination="mhs-JT-VW0" id="nu7-dL-M15"/>
+                        <outlet property="textView" destination="rbQ-Wu-6UX" id="r4j-5U-Xna"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <swipeGestureRecognizer direction="right" id="0X0-Gt-CWW"/>
