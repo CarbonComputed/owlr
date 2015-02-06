@@ -10,16 +10,12 @@ import UIKit
 import CoreLocation
 import SwifteriOS
 
-<<<<<<< Updated upstream
-class ViewController: UIViewController,CLLocationManagerDelegate {
-    @IBOutlet weak var imageView: UIImageView!
-=======
-
-
 class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDelegate {
-    @IBOutlet weak var imageView1: UIImageView!
+    @IBOutlet weak var imageView: UIImageView!
 
->>>>>>> Stashed changes
+
+
+
     @IBOutlet weak var textView: UITextView!
     var locationManager:CLLocationManager!
     var isImage1:Bool = false
@@ -95,7 +91,6 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
         }
     }
     
-<<<<<<< Updated upstream
     func swap(){
         let toImage = UIImage(named:"checkers.png")
         UIView.transitionWithView(self.imageView,
@@ -103,10 +98,9 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
             options: .TransitionCrossDissolve,
             animations: { self.imageView.image = toImage },
             completion: nil)
-=======
+    }
     func didReceiveAPIResults(statuses: [JSONValue]?){
         println(statuses)
->>>>>>> Stashed changes
     }
 
     func photosDidLoad(statuses: [JSONValue]?){
