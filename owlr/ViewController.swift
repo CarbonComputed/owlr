@@ -47,7 +47,6 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
             
         case .Authorized:
             println(".Authorized")
-            locationManager.startUpdatingLocation()
             break
             
         case .Denied:
@@ -104,6 +103,7 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     }
     func didReceiveAPIResults(statuses: [JSONValue]?){
         for status in statuses!{
+//            status.object.
             println(status["text"])
         }
     }
