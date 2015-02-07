@@ -24,12 +24,16 @@ class APIController  {
     }
     
     // Send twitter specs, get back images
-    func loadImages(lat: Double, long: Double, radius: Double, count: Int) {
+    func loadImages(lat: Double, long: Double, radius: Double, count: Int, maxId: String?) {
         var q = "filter:images"
         var geocode = "\(lat),\(long),\(radius)mi"
-        swifter.getSearchTweetsWithQuery(q, geocode: geocode, lang: nil, locale: nil, resultType: nil, count: count, until: nil, sinceID: nil, maxID: nil, includeEntities: nil, callback: nil, success: { (statuses: [JSONValue]?, searchMetadata) -> Void in
-              self.delegate?.didReceiveAPIResults(statuses)
-              println("Success")
+        swifter.getSearchTweetsWithQuery(q, geocode: geocode, lang: nil, locale: nil, resultType: nil, count: count, until: nil, sinceID: nil, maxID: maxId, includeEntities: nil, callback: nil, success: { (statuses: [JSONValue]?, searchMetadata) -> Void in
+              dispatch_async(dispatch_get_main_queue()) {
+                    self.delegate?.didReceiveAPIResults(statuses)
+                    println("Success")
+                }
+
+//              println("Success")
             
         }) { (error) -> Void in
             println(error)
