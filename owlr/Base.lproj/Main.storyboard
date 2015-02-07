@@ -149,7 +149,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="infinite" image="startImage.png" translatesAutoresizingMaskIntoConstraints="NO" id="oqo-8V-Slp">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="infinite" image="OwlLogo.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="oqo-8V-Slp">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nIa-cy-JxJ">
@@ -172,7 +172,7 @@
                                     <segue destination="SVC-Yn-o1C" kind="push" identifier="PushSegue" id="Max-rw-YEM"/>
                                 </connections>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Caption and #hashtags" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dUc-R8-w3X">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="#owlr" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dUc-R8-w3X">
                                 <rect key="frame" x="16" y="517" width="288" height="43"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="43" id="c83-bw-gyr"/>
@@ -182,7 +182,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
-                        <color key="backgroundColor" red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.17254902422428131" green="0.17647059261798859" blue="0.17254902422428131" alpha="1" colorSpace="deviceRGB"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="oqo-8V-Slp" secondAttribute="centerX" id="6ta-rf-3sa"/>
                             <constraint firstItem="nIa-cy-JxJ" firstAttribute="top" secondItem="XnH-lK-eGn" secondAttribute="bottom" constant="10" id="CIv-Jr-ihO"/>
@@ -206,7 +206,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="startImage.png" width="400" height="500"/>
+        <image name="OwlLogo.jpg" width="2400" height="1800"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

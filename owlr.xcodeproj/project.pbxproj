@@ -11,6 +11,7 @@
 		3F61525F1A85BE8F00990F99 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F61525D1A85BE8F00990F99 /* ImageLoader.swift */; };
 		3F6152601A85BE8F00990F99 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F61525E1A85BE8F00990F99 /* Photo.swift */; };
 		3F6152631A85CB6300990F99 /* startImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F6152621A85CB6300990F99 /* startImage.png */; };
+		3FF8CAF71A86C12E0067D0B2 /* OwlLogo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3FF8CAF61A86C12E0067D0B2 /* OwlLogo.jpg */; };
 		70D334091A83BAE2006A86D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D334081A83BAE2006A86D1 /* AppDelegate.swift */; };
 		70D3340C1A83BAE2006A86D1 /* owlr.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 70D3340A1A83BAE2006A86D1 /* owlr.xcdatamodeld */; };
 		70D3340E1A83BAE3006A86D1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D3340D1A83BAE2006A86D1 /* ViewController.swift */; };
@@ -74,6 +75,7 @@
 		3F61525D1A85BE8F00990F99 /* ImageLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		3F61525E1A85BE8F00990F99 /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		3F6152621A85CB6300990F99 /* startImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = startImage.png; sourceTree = "<group>"; };
+		3FF8CAF61A86C12E0067D0B2 /* OwlLogo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = OwlLogo.jpg; sourceTree = "<group>"; };
 		70D334031A83BAE2006A86D1 /* owlr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = owlr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		70D334071A83BAE2006A86D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		70D334081A83BAE2006A86D1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 		70D334421A847664006A86D1 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				3FF8CAF61A86C12E0067D0B2 /* OwlLogo.jpg */,
 				3F6152621A85CB6300990F99 /* startImage.png */,
 				70D334431A847664006A86D1 /* checkers.png */,
 				70D334441A847664006A86D1 /* imageNotFound.png */,
@@ -323,6 +326,7 @@
 				70D334111A83BAE3006A86D1 /* Main.storyboard in Resources */,
 				70D334161A83BAE3006A86D1 /* LaunchScreen.xib in Resources */,
 				3F6152631A85CB6300990F99 /* startImage.png in Resources */,
+				3FF8CAF71A86C12E0067D0B2 /* OwlLogo.jpg in Resources */,
 				70D334131A83BAE3006A86D1 /* Images.xcassets in Resources */,
 				70D334451A847664006A86D1 /* checkers.png in Resources */,
 				70D334461A847664006A86D1 /* imageNotFound.png in Resources */,
