@@ -84,6 +84,7 @@
                     <navigationItem key="navigationItem" id="EIe-w8-KA3"/>
                     <connections>
                         <outlet property="button" destination="gfc-SB-yvg" id="R6D-vo-18A"/>
+                        <outlet property="searchButton" destination="zEe-xb-Vq6" id="2gX-Hb-esb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SH4-Wk-B9p" userLabel="First Responder" sceneMemberID="firstResponder"/>

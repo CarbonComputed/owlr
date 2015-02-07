@@ -15,6 +15,7 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var button: UIButton!
+    @IBOutlet weak var searchButton: UIButton!
 
     var locationManager:CLLocationManager!
     var isImage1:Bool = false
