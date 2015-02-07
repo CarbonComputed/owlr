@@ -13,12 +13,14 @@ import SwifteriOS
 class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDelegate {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var textView: UITextView!
-    
+    @IBOutlet weak var button: UIButton!
+
     var locationManager:CLLocationManager!
     var isImage1:Bool = false
     
+    @IBOutlet var edgeRight: UIScreenEdgePanGestureRecognizer!
     let apiController = APIController()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         locationManager = CLLocationManager()
@@ -34,6 +36,11 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
         var swipeLeft = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
         swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
         self.view.addGestureRecognizer(swipeLeft)
+        
+        // Edge left set up
+        var edgeGesture : UIScreenEdgePanGestureRecognizer = UIScreenEdgePanGestureRecognizer(target: self, action:"respondToSwipeGesture:")
+        edgeGesture.edges = UIRectEdge.Left
+        self.view.addGestureRecognizer(edgeGesture)
         
     }
     
@@ -92,6 +99,15 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
                 break
             }
         }
+        
+        else if let swipeGesture = gesture as? UIScreenEdgePanGestureRecognizer {
+            switch swipeGesture.edges {
+            case UIRectEdge.Left:
+                showSearch()
+            default:
+                break
+            }
+        }
     }
     
     func swap( nextImage: UIImage){
@@ -102,12 +118,18 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
             animations: { self.imageView.image = toImage },
             completion: nil)
     }
+    
+    func showSearch()
+    {
+        
+    }
+    
+
     func didReceiveAPIResults(statuses: [JSONValue]?){
         for status in statuses!{
             println(status["text"])
         }
     }
-
     
     func updateText(caption: NSString ){
         textView.text = caption
@@ -117,5 +139,15 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
         imageView.image = nextImage
     }
     
+    @IBAction func circleTapped(sender:UIButton) {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    @IBAction func handlePan(recognizer:UIPanGestureRecognizer) {
+        let translation = recognizer.translationInView(self.view)
+        recognizer.view!.center = CGPoint(x:recognizer.view!.center.x + translation.x,
+            y:recognizer.view!.center.y + translation.y)
+        recognizer.setTranslation(CGPointZero, inView: self.view)
+    }
 }
 

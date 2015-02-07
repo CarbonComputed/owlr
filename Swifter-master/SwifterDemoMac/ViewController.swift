@@ -41,6 +41,15 @@ class ViewController: NSViewController {
         }
 
         if useACAccount {
+            @IBOutlet var edgeRight: UIScreenEdgePanGestureRecognizer!
+            @IBAction func searchSwipe(sender: AnyObject) {
+            }
+            @IBAction func searchSwipe(sender: AnyObject) {
+            }
+            @IBAction func swipeLeftAction(sender: AnyObject) {
+            }
+            @IBOutlet var edgeRight: UIScreenEdgePanGestureRecognizer!
+            @IBOutlet var edgeRightSwiped: UIScreenEdgePanGestureRecognizer!
             let accountStore = ACAccountStore()
             let accountType = accountStore.accountTypeWithAccountTypeIdentifier(ACAccountTypeIdentifierTwitter)
 
@@ -48,6 +57,12 @@ class ViewController: NSViewController {
                 granted, error in
 
                 if granted {
+                    @IBAction func searchSwipe(sender: AnyObject) {
+                    }
+                    @IBAction func swipeSe(sender: AnyObject) {
+                    }
+                    @IBAction func searchSwipe(sender: AnyObject) {
+                    }
                     let twitterAccounts = accountStore.accountsWithAccountType(accountType)
 
                     if (twitterAccounts != nil) {
