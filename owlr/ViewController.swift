@@ -170,13 +170,15 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     }
     
     func swap( nextImage: Photo){
-        let toImage = nextImage.photo
-        UIView.transitionWithView(self.imageView,
-            duration:0.6,
-            options: .TransitionCrossDissolve,
-            animations: { self.imageView.image = toImage },
-            completion: nil)
-        updateText(nextImage.text!)
+        if self.imageView != nil{
+            let toImage = nextImage.photo
+            UIView.transitionWithView(self.imageView,
+                duration:0.6,
+                options: .TransitionCrossDissolve,
+                animations: { self.imageView.image = toImage },
+                completion: nil)
+            updateText(nextImage.text!)
+        }
     }
     
     func showSearch()
