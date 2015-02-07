@@ -16,7 +16,10 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var button: UIButton!
     @IBOutlet weak var searchButton: UIButton!
-
+    @IBOutlet weak var radiusLabel: UILabel!
+    @IBOutlet weak var searchHashtags: UITextField!
+    @IBOutlet weak var radiusSlider: UISlider!
+    
     var locationManager:CLLocationManager!
     var isImage1:Bool = false
 
@@ -232,7 +235,7 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     }
 
     func photosLoaded(){
-        if currentImage == nil && photoQueue.count != 0{
+        if currentImage == nil && photoQueue.count != 0 && self.imageView != nil{
             currentImage = photoQueue[0]
             swap(currentImage?.photo)
         }
@@ -266,6 +269,7 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
 
 
         }
+        
         else
         {
             //photoQueue = hold // since photoqueu should be empty, then the backup hold array will be replaced for photoqueue

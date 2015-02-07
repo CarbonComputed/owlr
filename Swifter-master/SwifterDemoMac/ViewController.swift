@@ -18,7 +18,9 @@
 //  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 //  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 //  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+@IBOutlet weak var radiusSlider: UISlider!
 //  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+@IBOutlet weak var radiusSlider: UISlider!
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
@@ -35,6 +37,8 @@ class ViewController: NSViewController {
     }
     @IBOutlet weak var panRightGesture: UIScreenEdgePanGestureRecognizer!
     @IBOutlet var panRightGesture: UIScreenEdgePanGestureRecognizer!
+    @IBAction func searchButton(sender: AnyObject) {
+    }
     @IBOutlet var swipeRightPan: [UIScreenEdgePanGestureRecognizer]!
 
     let useACAccount = true
@@ -57,6 +61,8 @@ class ViewController: NSViewController {
             @IBAction func swipeLeftAction(sender: AnyObject) {
             }
             @IBOutlet var edgeRight: UIScreenEdgePanGestureRecognizer!
+            @IBAction func updateRadiusLabel(sender: AnyObject) {
+            }
             @IBOutlet var edgeRightSwiped: UIScreenEdgePanGestureRecognizer!
             let accountStore = ACAccountStore()
             let accountType = accountStore.accountTypeWithAccountTypeIdentifier(ACAccountTypeIdentifierTwitter)
