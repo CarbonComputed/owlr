@@ -16,7 +16,10 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var button: UIButton!
     @IBOutlet weak var searchButton: UIButton!
-
+    @IBOutlet weak var radiusLabel: UILabel!
+    @IBOutlet weak var searchHashtags: UITextField!
+    @IBOutlet weak var radiusSlider: UISlider!
+    
     var locationManager:CLLocationManager!
     var isImage1:Bool = false
     
@@ -28,6 +31,12 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     var radius : Double = 0.1
     
     var currentLocation : CLLocation?
+    
+    @IBAction func updateRadiusLabel(sender: AnyObject) {
+        let radius = Int(radiusSlider.value)
+        println(radius)
+        radiusLabel.text = "\(radius)"
+    }
     
     @IBOutlet var edgeRight: UIScreenEdgePanGestureRecognizer!
     let apiController = APIController()
