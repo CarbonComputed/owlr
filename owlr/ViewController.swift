@@ -27,15 +27,29 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     var photoQueue : [Photo] = []
     var hold : [Photo] = []
     var currentImage : Photo?
-
+    var photoDictionary = [String: Bool]()
+    var radius : Double = 1
+    var defaultRadius : Double = 1
+    let maxRetry : Int = 5
+    var currRetry : Int = 0
+    
     var currentLocation : CLLocation?
-    var currentState : State?
-
+    var currentState : State = State.Chilling
+    
     enum State{
-        case DownloadingImages
-        case Nothing
+        case Downloading
+        case Chilling
     }
-
+    
+    @IBAction func updateRadiusLabel(sender: AnyObject) {
+        let radiusNum = Int(radiusSlider.value)
+        radiusLabel.text = "\(radiusNum)"
+    }
+    
+    @IBAction func searchButton(sender: AnyObject) {
+        radius = Double(radiusSlider.value)
+    }
+    
     @IBOutlet var edgeRight: UIScreenEdgePanGestureRecognizer!
     let apiController = APIController()
 
@@ -53,8 +67,8 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     required init(coder aDecoder: NSCoder) {
         super.init(coder : aDecoder)
         currentImage = nil
-        currentState = State.Nothing
         currentLocation = CLLocation(latitude: 37.331789, longitude: -122.029620)
+        self.radius = self.defaultRadius
     }
 
     override func viewDidLoad() {
@@ -110,12 +124,15 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
 
         let location = locations.last as CLLocation
         self.currentLocation = location
+        if currentState != State.Downloading{
+            dispatch_async(dispatch_get_main_queue()) {
+                self.currentState = State.Downloading
+                self.apiController.loadImages(location.coordinate.latitude,long: location.coordinate.longitude,radius: self.radius,count: 5, maxId: nil)
+                println("didUpdateLocations:  \(location.coordinate.latitude), \(location.coordinate.longitude)")
 
-        dispatch_async(dispatch_get_main_queue()) {
-            self.apiController.loadImages(location.coordinate.latitude,long: location.coordinate.longitude,radius: 0.1,count: 50, maxId: nil)
-            println("didUpdateLocations:  \(location.coordinate.latitude), \(location.coordinate.longitude)")
-
+            }
         }
+        locationManager.stopUpdatingLocation()
 
     }
 
@@ -132,8 +149,8 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
             switch swipeGesture.direction {
             case UISwipeGestureRecognizerDirection.Left:
                 swipe()
-                var photo = currentImage?.photo
-                swap( photo )
+                var photo = currentImage
+                swap( photo! )
             default:
                 break
             }
@@ -149,8 +166,8 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
         }
     }
 
-    func swap( nextImage: UIImage?){
-        let toImage = nextImage
+    func swap( nextImage: Photo){
+        let toImage = nextImage.photo
         UIView.transitionWithView(self.imageView,
             duration:0.6,
             options: .TransitionCrossDissolve,
@@ -170,30 +187,44 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
         var newPhotos : [Photo] = []
 
         println("NEW \(newStatuses.count)")
+        if(newStatuses.isEmpty){
+            self.noPhotosLoaded()
+        }
+        var downloading = 0
+        var failed = 0
         for status in newStatuses{
             var url = status["entities"]?["media"][0]["media_url"]
             var urlString = url!.string
-
             var id = status["id_str"]
             var idString = id!.string
-            if(urlString != nil){
-                currentState = State.DownloadingImages
+            if(urlString != nil  && idString != nil && photoDictionary[urlString!] == nil ){
+                downloading += 1
+                self.radius = self.defaultRadius
                 ImageLoader.sharedLoader.imageForUrl(urlString!, completionHandler:{(image: UIImage?, url: String) in
+                    self.currRetry = 0
                     var photo = Photo(id : idString!, photo: image!, jsonData: status, url: urlString!)
                     newPhotos.append(photo)
-
-                    self.photoQueue.append(photo)
-                    self.photosLoaded()
-                    if statuses?.count == newPhotos.count {
-                        //All Photos Downloaded
-                        self.currentState = State.Nothing
-                        self.photoQueue = self.filterDups(newPhotos)
-//                        self.hold = self.filterDups(self.filterOutdated(newPhotos))
-
+                    self.photoLoaded(photo)
+                    if downloading == newPhotos.count {
+                        self.allPhotosLoaded(newPhotos)
+                    
                     }
 
 
                 })
+            }
+            else{
+                failed += 1
+                if failed == newStatuses.count && self.currRetry < self.maxRetry{
+                    //increase radius
+                    self.radius *= 2
+                    self.noPhotosLoaded()
+                }
+                if self.currRetry >= self.maxRetry{
+                    self.radius = self.defaultRadius
+                    self.photoDictionary.removeAll(keepCapacity: true)
+                    self.noPhotosLoaded()
+                }
             }
 
 
@@ -233,49 +264,114 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
         return newPhotoList
 
     }
-
-    func photosLoaded(){
-        if currentImage == nil && photoQueue.count != 0 && self.imageView != nil{
-            currentImage = photoQueue[0]
-            swap(currentImage?.photo)
+    
+    func noPhotosLoaded(){
+        self.currRetry += 1
+        dispatch_async(dispatch_get_main_queue()) {
+            var long = self.currentLocation?.coordinate.longitude
+            var lat = self.currentLocation?.coordinate.latitude
+            self.currentState = State.Downloading
+            self.apiController.loadImages(lat!, long: long!,radius: self.radius,count: 5, maxId : nil)
         }
-
+    }
+    
+    func allPhotosLoaded(photos : [Photo]){
+        self.photoQueue = self.filterDups(photos)
+        self.currentImage = self.photoQueue[0]
     }
 
+    func photoLoaded(photo : Photo){
+        self.photoQueue.append(photo)
+        if currentImage == nil && photoQueue.count > 0{
+            currentImage = photoQueue[0]
+            swap(currentImage!)
+            
+        }
+//        if currentImage == nil && photoDictionary[photoQueue[0].url!] != nil{
+//            swipe()
+//        }
+//        if self.currentState == State.Chilling && photoQueue.isEmpty{
+//            swipe()
+//        }
+//        if currentImage == nil && photoQueue.count != 0 && self.imageView != nil{
+//            currentImage = photoQueue[0]
+//            swap(currentImage?.photo)
+//        }
+        
+
+    }
+    
+    
+    
+    
+    
+    
+    // checks if 75 % or more of urls are same
+    func urlChecker(){
+        
+        var index : Int = 0
+        var counter : Int = 0
+        
+        for index in 0...photoQueue.count-1 {  //for index in 0 through last index of photoque
+            if photoDictionary.indexForKey(photoQueue[index].url!) != nil {     // check if the photos are same
+                counter += 1
+            }
+        }
+        
+        
+        if  Double(counter)/Double(photoQueue.count) >= 0.75   {
+                
+                var long = self.currentLocation?.coordinate.longitude
+                var lat = self.currentLocation?.coordinate.latitude
+//                self.apiController.loadImages(lat!, long: long!,radius: radius+0.1,count: 25)
+        }
+    }
+    
+            
+            
+        
+    
+    
+    
+    
+    
+    
+    
+    
     // moves current image to a backup array, and then sets the first element in array of photoqueue to the current image
     func swipe(){
         println("Count \(photoQueue.count)")
-        if !photoQueue.isEmpty  {
+        println(currentImage?.url)
+        if photoQueue.isEmpty{
+            self.currentImage = nil
+            self.noPhotosLoaded()
+        }
+        else{
+            photoDictionary[photoQueue[0].url!] = true
             photoQueue.removeAtIndex(0)
             if photoQueue.isEmpty{
+                self.currentImage = nil
+                self.noPhotosLoaded()
+            }
+            else{
+                println(photoQueue[0].url)
+                self.currentImage = photoQueue[0]
+            }
+            
+            
+            if photoQueue.count <= 2 && self.currentImage != nil{//and not already downloading
                 var maxId = currentImage?.id
-                currentImage = nil
                 dispatch_async(dispatch_get_main_queue()) {
                     var long = self.currentLocation?.coordinate.longitude
                     var lat = self.currentLocation?.coordinate.latitude
-                    self.apiController.loadImages(lat!, long: long!,radius: 0.1,count: 50, maxId : maxId!)
+                    self.currentState = State.Downloading
+                    self.apiController.loadImages(lat!, long: long!,radius: self.radius,count: 5, maxId : maxId)
                 }
-            }else{
-                println(photoQueue[0].url)
-                println(currentImage?.url)
-                if currentImage?.url == photoQueue[0].url{
-                    swipe()
-                }
-                else{
-                    currentImage = photoQueue[0]
-                }
-                
             }
 
+        }
+        println("swiped")
 
-        }
-        
-        else
-        {
-            //photoQueue = hold // since photoqueu should be empty, then the backup hold array will be replaced for photoqueue
-            //hold = []
-            //swipe()
-        }
         
     }
 
