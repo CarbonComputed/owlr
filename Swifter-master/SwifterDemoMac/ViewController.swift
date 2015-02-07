@@ -37,6 +37,8 @@ class ViewController: NSViewController {
     }
     @IBOutlet weak var panRightGesture: UIScreenEdgePanGestureRecognizer!
     @IBOutlet var panRightGesture: UIScreenEdgePanGestureRecognizer!
+    @IBAction func searchButton(sender: AnyObject) {
+    }
     @IBOutlet var swipeRightPan: [UIScreenEdgePanGestureRecognizer]!
 
     let useACAccount = true

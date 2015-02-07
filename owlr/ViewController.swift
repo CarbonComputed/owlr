@@ -33,9 +33,12 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     var currentLocation : CLLocation?
     
     @IBAction func updateRadiusLabel(sender: AnyObject) {
-        let radius = Int(radiusSlider.value)
-        println(radius)
-        radiusLabel.text = "\(radius)"
+        let radiusNum = Int(radiusSlider.value)
+        radiusLabel.text = "\(radiusNum)"
+    }
+    
+    @IBAction func searchButton(sender: AnyObject) {
+        radius = Double(radiusSlider.value)
     }
     
     @IBOutlet var edgeRight: UIScreenEdgePanGestureRecognizer!
