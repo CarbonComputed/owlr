@@ -163,7 +163,8 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
             ImageLoader.sharedLoader.imageForUrl(urlString!, completionHandler:{(image: UIImage?, url: String) in
                 imageDownCount += 1
                 var photo = Photo(photo: image!, jsonData: status)
-                
+//                photoQueue[imageDownCount] = photo
+
                 self.photoQueue.append(photo)
                 dispatch_async(dispatch_get_main_queue()) {
                     self.photosLoaded()

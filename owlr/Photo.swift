@@ -8,16 +8,17 @@
 
 import Foundation
 import UIKit
+import SwifteriOS
 
 class Photo {
-    
+
     var photo : UIImage?
-    var jsonData : [String : AnyObject?]
-    
-    init(photo : UIImage, jsonData : [String : AnyObject?]){
+    var jsonData : [String : JSONValue]
+
+    init(photo : UIImage, jsonData : [String : JSONValue]){
         self.photo = photo
         self.jsonData = jsonData
     }
-    
-    
+
+
 }
