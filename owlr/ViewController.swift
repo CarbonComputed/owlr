@@ -20,9 +20,11 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     var isImage1:Bool = false
     
     // vars for the swip func: ali did this
-    var photoQueue : [AnyObject] = []
-    var hold : [AnyObject] = []
-    var currentImage : AnyObject?
+    var photoQueue : [Photo] = []
+    var hold : [Photo] = []
+    var currentImage : Photo?
+    
+    var currentLocation : CLLocation?
     
     @IBOutlet var edgeRight: UIScreenEdgePanGestureRecognizer!
     let apiController = APIController()
@@ -41,6 +43,7 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     required init(coder aDecoder: NSCoder) {
         super.init(coder : aDecoder)
         currentImage = nil
+        currentLocation = CLLocation(latitude: 37.331789, longitude: -122.029620)
     }
 
     override func viewDidLoad() {
@@ -93,6 +96,7 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
         
         let location = locations.last as CLLocation
+        self.currentLocation = location
         dispatch_async(dispatch_get_main_queue()) {
             self.apiController.loadImages(location.coordinate.latitude,long: location.coordinate.longitude,radius: 0.1,count: 25)
             println("didUpdateLocations:  \(location.coordinate.latitude), \(location.coordinate.longitude)")
@@ -116,7 +120,9 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
             
             switch swipeGesture.direction {
             case UISwipeGestureRecognizerDirection.Left:
-                swap( UIImage(named:"checkers.png")! )
+                swipe()
+                var photo = currentImage?.photo
+                swap( photo )
             default:
                 break
             }
@@ -132,7 +138,7 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
         }
     }
     
-    func swap( nextImage: UIImage){
+    func swap( nextImage: UIImage?){
         let toImage = nextImage
         UIView.transitionWithView(self.imageView,
             duration:0.6,
@@ -149,15 +155,23 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
 
     func didReceiveAPIResults(statuses: [JSONValue]?){
         var newStatuses = cleanJSON(statuses!)
-        
+        var imageDownCount = 0
         for status in newStatuses{
             var url = status["entities"]?["media"][0]["media_url"]
             var urlString = url!.string
             
             ImageLoader.sharedLoader.imageForUrl(urlString!, completionHandler:{(image: UIImage?, url: String) in
+                imageDownCount += 1
+                var photo = Photo(photo: image!, jsonData: status)
+                
+                self.photoQueue.append(photo)
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.photosLoaded()
+                    
+                }
+                
                 
             })
-            
             
             
             
@@ -166,15 +180,31 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
         
     }
     
-    func photosDidLoad(statuses: [JSONValue]?){
-        
+    func photosLoaded(){
+        if currentImage == nil && photoQueue.count != 0{
+            currentImage = photoQueue[0]
+            self.imageView.image = currentImage?.photo
+        }
     }
+    
     // moves current image to a backup array, and then sets the first element in array of photoqueue to the current image
     func swipe(){
-        if !photoQueue[0].isEmpty  {  // if photoqueue isnt empty
+        if !photoQueue.isEmpty  {  // if photoqueue isnt empty
             hold.append(photoQueue[0]) // first element in photoqueue is added to the hold array
             photoQueue.removeAtIndex(0) // removes the first element in photoqueue
-            currentImage = photoQueue[0] // current image pointer is set equal to the first element in photoqueue array
+            if photoQueue.isEmpty{
+                dispatch_async(dispatch_get_main_queue()) {
+                    var long = self.currentLocation?.coordinate.longitude
+                    var lat = self.currentLocation?.coordinate.latitude
+                        self.apiController.loadImages(lat!, long: long!,radius: 0.1,count: 25)
+                    
+                }
+                
+            }else{
+                currentImage = photoQueue[0] // current image pointer is set equal to the first element in photoqueue array
+                imageView.image = currentImage?.photo
+            }
+
             
         }
         else
