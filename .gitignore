@@ -12,3 +12,5 @@ Swifter-master/Swifter.xcodeproj/project.pbxproj
 *.pbxproj
 
 owlr.xcodeproj/project.pbxproj
+
+*.xcbkptlist

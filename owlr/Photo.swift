@@ -23,7 +23,10 @@ class Photo {
         self.jsonData = jsonData
         self.url = url
         self.id = id
-        self.text = self.jsonData["text"]?.string
+        let url2 = jsonData["entities"]?["media"][0]["display_url"]
+        
+        self.text = (self.jsonData["text"]?.string)?.stringByReplacingOccurrencesOfString(" http://.*", withString: "", options: NSStringCompareOptions.RegularExpressionSearch, range: nil)
+        println(self.text)
     }
 
 
