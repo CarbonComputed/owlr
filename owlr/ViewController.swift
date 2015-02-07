@@ -22,7 +22,7 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     
     var locationManager:CLLocationManager!
     var isImage1:Bool = false
-
+    
     // vars for the swip func: ali did this
     var photoQueue : [Photo] = []
     var hold : [Photo] = []
@@ -52,25 +52,25 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     
     @IBOutlet var edgeRight: UIScreenEdgePanGestureRecognizer!
     let apiController = APIController()
-
-
+    
+    
     @IBOutlet var swipeRight: UISwipeGestureRecognizer!
-
-
+    
+    
     @IBAction func swipeRightAction(sender: AnyObject) {
-
+        
     }
     @IBAction func swipeRightPan(sender: AnyObject) {
-
+        
     }
-
+    
     required init(coder aDecoder: NSCoder) {
         super.init(coder : aDecoder)
         currentImage = nil
         currentLocation = CLLocation(latitude: 37.331789, longitude: -122.029620)
         self.radius = self.defaultRadius
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         locationManager = CLLocationManager()
@@ -80,48 +80,48 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
         locationManager.requestAlwaysAuthorization()
         apiController.delegate = self
         // Do any additional setup after loading the view, typically from a nib.
-
+        
         // Swipe left set up
         var swipeLeft = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
         swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
         self.view.addGestureRecognizer(swipeLeft)
-
+        
         // Edge left set up
         var edgeGesture : UIScreenEdgePanGestureRecognizer = UIScreenEdgePanGestureRecognizer(target: self, action:"respondToSwipeGesture:")
         edgeGesture.edges = UIRectEdge.Left
         self.view.addGestureRecognizer(edgeGesture)
-
+        
     }
-
+    
     func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         println("didChangeAuthorizationStatus")
-
+        
         switch status {
         case .NotDetermined:
             println(".NotDetermined")
             break
-
+            
         case .Authorized:
             println(".Authorized")
             locationManager.startUpdatingLocation()
-
+            
             break
-
+            
         case .Denied:
             println(".Denied")
             break
-
+            
         default:
             println("Unhandled authorization status")
             break
-
+            
         }
     }
-
-
-
+    
+    
+    
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-
+        
         let location = locations.last as CLLocation
         self.currentLocation = location
         if currentState != State.Downloading{
@@ -129,33 +129,36 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
                 self.currentState = State.Downloading
                 self.apiController.loadImages(location.coordinate.latitude,long: location.coordinate.longitude,radius: self.radius,count: 5, maxId: nil)
                 println("didUpdateLocations:  \(location.coordinate.latitude), \(location.coordinate.longitude)")
-
+                
             }
         }
         locationManager.stopUpdatingLocation()
-
+        
     }
-
-
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     func respondToSwipeGesture(gesture: UIGestureRecognizer) {
-
+        
         if let swipeGesture = gesture as? UISwipeGestureRecognizer {
-
+            
             switch swipeGesture.direction {
             case UISwipeGestureRecognizerDirection.Left:
                 swipe()
                 var photo = currentImage
-                swap( photo! )
+                if photo != nil{
+                    swap( photo! )
+
+                }
             default:
                 break
             }
         }
-
+            
         else if let swipeGesture = gesture as? UIScreenEdgePanGestureRecognizer {
             switch swipeGesture.edges {
             case UIRectEdge.Left:
@@ -165,7 +168,7 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
             }
         }
     }
-
+    
     func swap( nextImage: Photo){
         let toImage = nextImage.photo
         UIView.transitionWithView(self.imageView,
@@ -174,18 +177,18 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
             animations: { self.imageView.image = toImage },
             completion: nil)
     }
-
+    
     func showSearch()
     {
-
+        
     }
-
-
+    
+    
     func didReceiveAPIResults(statuses: [JSONValue]?){
         var newStatuses = cleanJSON(statuses!)
         var downloaded = 0
         var newPhotos : [Photo] = []
-
+        
         println("NEW \(newStatuses.count)")
         if(newStatuses.isEmpty){
             self.noPhotosLoaded()
@@ -207,10 +210,10 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
                     self.photoLoaded(photo)
                     if downloading == newPhotos.count {
                         self.allPhotosLoaded(newPhotos)
-                    
+                        
                     }
-
-
+                    
+                    
                 })
             }
             else{
@@ -226,29 +229,34 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
                     self.noPhotosLoaded()
                 }
             }
-
-
-
-
+            
+            
+            
+            
         }
-
-
+        
+        
     }
-
-
+    
+    
     func filterDups(photos: [Photo]) -> [Photo]{
         var check = [String : Photo]()
         for (i,photo) in enumerate(photos){
             check[photo.url!] = photo
         }
         var newPhotoList : [Photo] = []
-        for photo in check.values{
-            newPhotoList.append(photo)
+        for photo in self.photoQueue{
+            var nphoto = check[photo.url!]
+            if nphoto != nil{
+                newPhotoList.append(nphoto!)
+                check.removeValueForKey(photo.url!)
+                
+            }
         }
         return newPhotoList
-
+        
     }
-
+    
     func filterOutdated(newPhotos : [Photo]) -> [Photo]{
         var newPhotoList : [Photo] = self.photoQueue.filter
             { (photo) -> Bool in
@@ -259,10 +267,10 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
                 }
                 var first = self.photoQueue[0] as Photo
                 return false || (first.url! == photo.url!)
-            }
-
+        }
+        
         return newPhotoList
-
+        
     }
     
     func noPhotosLoaded(){
@@ -279,7 +287,7 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
         self.photoQueue = self.filterDups(photos)
         self.currentImage = self.photoQueue[0]
     }
-
+    
     func photoLoaded(photo : Photo){
         self.photoQueue.append(photo)
         if currentImage == nil && photoQueue.count > 0{
@@ -287,18 +295,18 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
             swap(currentImage!)
             
         }
-//        if currentImage == nil && photoDictionary[photoQueue[0].url!] != nil{
-//            swipe()
-//        }
-//        if self.currentState == State.Chilling && photoQueue.isEmpty{
-//            swipe()
-//        }
-//        if currentImage == nil && photoQueue.count != 0 && self.imageView != nil{
-//            currentImage = photoQueue[0]
-//            swap(currentImage?.photo)
-//        }
+        //        if currentImage == nil && photoDictionary[photoQueue[0].url!] != nil{
+        //            swipe()
+        //        }
+        //        if self.currentState == State.Chilling && photoQueue.isEmpty{
+        //            swipe()
+        //        }
+        //        if currentImage == nil && photoQueue.count != 0 && self.imageView != nil{
+        //            currentImage = photoQueue[0]
+        //            swap(currentImage?.photo)
+        //        }
         
-
+        
     }
     
     
@@ -320,16 +328,16 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
         
         
         if  Double(counter)/Double(photoQueue.count) >= 0.75   {
-                
-                var long = self.currentLocation?.coordinate.longitude
-                var lat = self.currentLocation?.coordinate.latitude
-//                self.apiController.loadImages(lat!, long: long!,radius: radius+0.1,count: 25)
+            
+            var long = self.currentLocation?.coordinate.longitude
+            var lat = self.currentLocation?.coordinate.latitude
+            //                self.apiController.loadImages(lat!, long: long!,radius: radius+0.1,count: 25)
         }
     }
     
-            
-            
-        
+    
+    
+    
     
     
     
@@ -368,49 +376,49 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
                     self.apiController.loadImages(lat!, long: long!,radius: self.radius,count: 5, maxId : maxId)
                 }
             }
-
+            
         }
         println("swiped")
-
+        
         
     }
-
-
+    
+    
     func cleanJSON(statuses: [JSONValue]) -> [[String : JSONValue]]{
         var newStatuses = [[String : JSONValue]]()
         let fields = ["text","entities","id_str"]
         for (index, status) in enumerate(statuses){
-
+            
             var cleanJson = [String : JSONValue]()
             for field in fields{
-
-
+                
+                
                 cleanJson[field] = status[field]
-
+                
             }
             newStatuses.append(cleanJson)
-
-
+            
+            
         }
         return newStatuses
     }
-
-
+    
+    
     // moves current image to a backup array, and then sets the first element in array of photoqueue to the current image
-
-
+    
+    
     func updateText(caption: NSString ){
         textView.text = caption
     }
-
+    
     func loadNewImage(nextImage: UIImage){
         imageView.image = nextImage
     }
-
+    
     @IBAction func circleTapped(sender:UIButton) {
         self.navigationController?.popViewControllerAnimated(true)
     }
-
+    
     @IBAction func handlePan(recognizer:UIPanGestureRecognizer) {
         let translation = recognizer.translationInView(self.view)
         recognizer.view!.center = CGPoint(x:recognizer.view!.center.x + translation.x,

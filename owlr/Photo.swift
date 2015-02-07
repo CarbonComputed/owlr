@@ -16,12 +16,14 @@ class Photo {
     var url : String?
     var jsonData : [String : JSONValue]
     var id : String?
+    var text : String?
 
     init(id : String, photo : UIImage, jsonData : [String : JSONValue], url: String){
         self.photo = photo
         self.jsonData = jsonData
         self.url = url
         self.id = id
+        self.text = self.jsonData["text"]?.string
     }
 
 
