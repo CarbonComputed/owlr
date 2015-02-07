@@ -30,8 +30,7 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     
     @IBOutlet var swipeRight: UISwipeGestureRecognizer!
     
-<<<<<<< Updated upstream
-=======
+
     @IBAction func swipeRightAction(sender: AnyObject) {
         
     }
@@ -39,7 +38,6 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
         
     }
     
->>>>>>> Stashed changes
     required init(coder aDecoder: NSCoder) {
         super.init(coder : aDecoder)
         currentImage = nil
@@ -207,24 +205,9 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
         return newStatuses
     }
     
-    func photosDidLoad(statuses: [JSONValue]?){
-        
-    }
+
     // moves current image to a backup array, and then sets the first element in array of photoqueue to the current image
-    func swipe(){
-        if !photoQueue[0].isEmpty  {  // if photoqueue isnt empty
-            hold.append(photoQueue[0]) // first element in photoqueue is added to the hold array
-            photoQueue.removeAtIndex(0) // removes the first element in photoqueue
-            currentImage = photoQueue[0] // current image pointer is set equal to the first element in photoqueue array
-            
-        }
-        else
-        {
-            photoQueue = hold // since photoqueu should be empty, then the backup hold array will be replaced for photoqueue
-            hold = []
-        }
-        
-    }
+
     
     func updateText(caption: NSString ){
         textView.text = caption
