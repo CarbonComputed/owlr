@@ -32,6 +32,7 @@ public let JSONFalse = JSONValue(false)
 
 public let JSONNull = JSONValue.JSONNull
 
+
 public enum JSON : Equatable, Printable {
     
     case JSONString(Swift.String)
@@ -330,6 +331,7 @@ extension JSON: Printable {
     }
 
 }
+
 
 extension JSONValue: BooleanType {
 

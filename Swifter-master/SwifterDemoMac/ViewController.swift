@@ -28,6 +28,13 @@ import Accounts
 import SwifterMac
 
 class ViewController: NSViewController {
+    @IBAction func swipeSearch(sender: AnyObject) {
+    }
+    @IBAction func edgeSwipe(sender: AnyObject) {
+    }
+    @IBOutlet weak var panRightGesture: UIScreenEdgePanGestureRecognizer!
+    @IBOutlet var panRightGesture: UIScreenEdgePanGestureRecognizer!
+    @IBOutlet var swipeRightPan: [UIScreenEdgePanGestureRecognizer]!
 
     let useACAccount = true
                             
