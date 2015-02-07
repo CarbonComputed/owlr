@@ -176,6 +176,7 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
             options: .TransitionCrossDissolve,
             animations: { self.imageView.image = toImage },
             completion: nil)
+        updateText(nextImage.text!)
     }
     
     func showSearch()
@@ -379,8 +380,6 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
             
         }
         println("swiped")
-        
-        
     }
     
     
@@ -409,6 +408,7 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     
     func updateText(caption: NSString ){
         textView.text = caption
+        textView.textColor = UIColor.whiteColor()
     }
     
     func loadNewImage(nextImage: UIImage){
