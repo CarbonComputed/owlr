@@ -24,6 +24,8 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     var photoQueue : [Photo] = []
     var hold : [Photo] = []
     var currentImage : Photo?
+    var photoDictionary = [String: Bool]()
+    var radius : Double = 0.1
     
     var currentLocation : CLLocation?
     
@@ -220,26 +222,73 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
         }
     }
     
+    
+    
+    
+    
+    // checks if 75 % or more of urls are same
+    func urlChecker(){
+        
+        var index : Int = 0
+        var counter : Int = 0
+        
+        for index in 0...photoQueue.count-1 {  //for index in 0 through last index of photoque
+            if photoDictionary.indexForKey(photoQueue[index].url!) != nil {     // check if the photos are same
+                counter += 1
+            }
+        }
+        
+        
+        if  Double(counter)/Double(photoQueue.count) >= 0.75   {
+                
+                var long = self.currentLocation?.coordinate.longitude
+                var lat = self.currentLocation?.coordinate.latitude
+                self.apiController.loadImages(lat!, long: long!,radius: radius+0.1,count: 25)
+        }
+    }
+    
+            
+            
+        
+    
+    
+    
+    
+    
+    
+    
+    
     // moves current image to a backup array, and then sets the first element in array of photoqueue to the current image
     func swipe(){
         if !photoQueue.isEmpty  {  // if photoqueue isnt empty
+            if photoDictionary.indexForKey(photoQueue[0].url!) == nil { // adds url to dictionary if its not already in it
+            photoDictionary[photoQueue[0].url!] = true
+            }
+            else {
+                urlChecker()
+            }
+            
             hold.append(photoQueue[0]) // first element in photoqueue is added to the hold array
+            
             photoQueue.removeAtIndex(0) // removes the first element in photoqueue
             if photoQueue.isEmpty{
                 dispatch_async(dispatch_get_main_queue()) {
                     var long = self.currentLocation?.coordinate.longitude
                     var lat = self.currentLocation?.coordinate.latitude
-                        self.apiController.loadImages(lat!, long: long!,radius: 0.1,count: 25)
+                        self.apiController.loadImages(lat!, long: long!,radius: self.radius,count: 25)
                     
                 }
                 
-            }else{
+            }
+            else
+            {
                 currentImage = photoQueue[0] // current image pointer is set equal to the first element in photoqueue array
                 imageView.image = currentImage?.photo
             }
 
             
         }
+        
         else
         {
             photoQueue = hold // since photoqueu should be empty, then the backup hold array will be replaced for photoqueue

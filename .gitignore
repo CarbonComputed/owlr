@@ -8,3 +8,7 @@ owlr.xcodeproj/project.xcworkspace/xcshareddata/owlr.xccheckout
 owlr.xcodeproj/xcuserdata/kmcarbone16.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
 
 Swifter-master/Swifter.xcodeproj/project.pbxproj
+
+*.pbxproj
+
+owlr.xcodeproj/project.pbxproj
