@@ -157,27 +157,36 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     func didReceiveAPIResults(statuses: [JSONValue]?){
         var newStatuses = cleanJSON(statuses!)
         var downloaded = 0
-        var newPhotos : [Photo]
+        var newPhotos : [Photo] = []
         for status in newStatuses{
             var url = status["entities"]?["media"][0]["media_url"]
             var urlString = url!.string
-            
-            ImageLoader.sharedLoader.imageForUrl(urlString!, completionHandler:{(image: UIImage?, url: String) in
-                downloaded += 1
-                var photo = Photo(photo: image!, jsonData: status, url: urlString!)
-//                photoQueue[imageDownCount] = photo
-                self.photoQueue.insert(photo, atIndex: 1)
-                newPhotos.append(photo)
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.photosLoaded()
-                }
-                if downloaded == newStatuses.count {
-                    //All Photos Downloaded
+            if(urlString != nil){
+                ImageLoader.sharedLoader.imageForUrl(urlString!, completionHandler:{(image: UIImage?, url: String) in
+                    downloaded += 1
+                    var photo = Photo(photo: image!, jsonData: status, url: urlString!)
+                    //                photoQueue[imageDownCount] = photo
+                    if self.photoQueue.count > 0{
+                        self.photoQueue.insert(photo, atIndex: 1)
+                    }
+                    else{
+                        self.photoQueue.append(photo)
+                        
+                    }
+                    newPhotos.append(photo)
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.photosLoaded()
+                    }
+                    if statuses?.count == newPhotos.count {
+                        //All Photos Downloaded
+                        self.photoQueue = self.filterOutdated(newPhotos)
+                        self.hold = self.filterOutdated(newPhotos)
+                    }
                     
-                }
-                
-                
-            })
+                    
+                })
+            }
+
             
             
             
@@ -186,11 +195,22 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
         
     }
     
-    func removeOutdated(newPhotos : [Photo]){
+
+    
+    func filterOutdated(newPhotos : [Photo]) -> [Photo]{
+        var newPhotoList : [Photo] = self.photoQueue.filter
+            { (photo) -> Bool in
+                for p in newPhotos{
+                    if p.url! == photo.url!{
+                        return true
+                    }
+                }
+                var first = self.photoQueue[0] as Photo
+                return false || (first.url! == photo.url!)
+            }
+
+        return newPhotoList
         
-        for photo in self.photoQueue{
-            
-        }
     }
     
     func photosLoaded(){
