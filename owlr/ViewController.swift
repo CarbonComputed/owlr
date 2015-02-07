@@ -155,19 +155,23 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
 
     func didReceiveAPIResults(statuses: [JSONValue]?){
         var newStatuses = cleanJSON(statuses!)
-        var imageDownCount = 0
+        var downloaded = 0
+        var newPhotos : [Photo]
         for status in newStatuses{
             var url = status["entities"]?["media"][0]["media_url"]
             var urlString = url!.string
             
             ImageLoader.sharedLoader.imageForUrl(urlString!, completionHandler:{(image: UIImage?, url: String) in
-                imageDownCount += 1
-                var photo = Photo(photo: image!, jsonData: status)
+                downloaded += 1
+                var photo = Photo(photo: image!, jsonData: status, url: urlString!)
 //                photoQueue[imageDownCount] = photo
-
-                self.photoQueue.append(photo)
+                self.photoQueue.insert(photo, atIndex: 1)
+                newPhotos.append(photo)
                 dispatch_async(dispatch_get_main_queue()) {
                     self.photosLoaded()
+                }
+                if downloaded == newStatuses.count {
+                    //All Photos Downloaded
                     
                 }
                 
@@ -179,6 +183,13 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
         }
         
         
+    }
+    
+    func removeOutdated(newPhotos : [Photo]){
+        
+        for photo in self.photoQueue{
+            
+        }
     }
     
     func photosLoaded(){
