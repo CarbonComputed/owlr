@@ -214,7 +214,7 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     }
     
     func photosLoaded(){
-        if currentImage == nil && photoQueue.count != 0{
+        if currentImage == nil && photoQueue.count != 0 && self.imageView != nil{
             currentImage = photoQueue[0]
             self.imageView.image = currentImage?.photo
         }
