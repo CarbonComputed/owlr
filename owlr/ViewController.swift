@@ -18,8 +18,18 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     var locationManager:CLLocationManager!
     var isImage1:Bool = false
     
+    // vars for the swip func: ali did this
+    var photoQueue : [AnyObject] = []
+    var hold : [AnyObject] = []
+    var currentImage : AnyObject?
+    
     @IBOutlet var edgeRight: UIScreenEdgePanGestureRecognizer!
     let apiController = APIController()
+    
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder : aDecoder)
+        currentImage = nil
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +38,6 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         self.locationManager.distanceFilter  = 10.0
         locationManager.requestAlwaysAuthorization()
-        locationManager.startUpdatingLocation()
         apiController.delegate = self
         // Do any additional setup after loading the view, typically from a nib.
         
@@ -55,6 +64,7 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
         case .Authorized:
             println(".Authorized")
             locationManager.startUpdatingLocation()
+
             break
             
         case .Denied:
@@ -127,8 +137,28 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
 
     func didReceiveAPIResults(statuses: [JSONValue]?){
         for status in statuses!{
+//            status.object.
             println(status["text"])
         }
+    }
+    
+    func photosDidLoad(statuses: [JSONValue]?){
+        
+    }
+    // moves current image to a backup array, and then sets the first element in array of photoqueue to the current image
+    func swipe(){
+        if !photoQueue[0].isEmpty  {  // if photoqueue isnt empty
+            hold.append(photoQueue[0]) // first element in photoqueue is added to the hold array
+            photoQueue.removeAtIndex(0) // removes the first element in photoqueue
+            currentImage = photoQueue[0] // current image pointer is set equal to the first element in photoqueue array
+            
+        }
+        else
+        {
+            photoQueue = hold // since photoqueu should be empty, then the backup hold array will be replaced for photoqueue
+            hold = []
+        }
+        
     }
     
     func updateText(caption: NSString ){

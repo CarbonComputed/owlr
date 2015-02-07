@@ -109,7 +109,6 @@
         <!--View Controller-->
         <scene sceneID="aoX-oi-4QR">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="W2r-pb-Ub2" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="w9h-tb-w8b" customClass="ViewController" customModule="owlr" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="XnH-lK-eGn"/>
@@ -172,6 +171,7 @@
                         <outlet property="textView" destination="T1S-En-hJ8" id="WIE-HJ-8bn"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="W2r-pb-Ub2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1180" y="418"/>
         </scene>
