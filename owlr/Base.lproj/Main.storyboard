@@ -132,10 +132,11 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="infinite" image="OwlLogoNoBackground-01-1.png" translatesAutoresizingMaskIntoConstraints="NO" id="oqo-8V-Slp">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             </imageView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="#owlr" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dUc-R8-w3X">
-                                <rect key="frame" x="16" y="517" width="288" height="43"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e02-FO-JUx">
+                                <rect key="frame" x="0.0" y="485" width="320" height="83"/>
+                                <color key="backgroundColor" red="0.3921568627" green="0.3921568627" blue="0.3921568627" alpha="0.14999999999999999" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="43" id="c83-bw-gyr"/>
+                                    <constraint firstAttribute="height" constant="83" id="FOB-JN-O6f"/>
                                 </constraints>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -163,12 +164,23 @@
                             <activityIndicatorView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Thw-SM-0jb">
                                 <rect key="frame" x="16" y="28" width="37" height="37"/>
                             </activityIndicatorView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="#owlr" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dUc-R8-w3X">
+                                <rect key="frame" x="16" y="485" width="288" height="75"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="75" id="c83-bw-gyr"/>
+                                </constraints>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="deviceRGB"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="oqo-8V-Slp" secondAttribute="centerX" id="6ta-rf-3sa"/>
+                            <constraint firstItem="e02-FO-JUx" firstAttribute="leading" secondItem="oqo-8V-Slp" secondAttribute="leading" id="7N8-HR-DXV"/>
                             <constraint firstItem="nIa-cy-JxJ" firstAttribute="top" secondItem="XnH-lK-eGn" secondAttribute="bottom" id="CIv-Jr-ihO"/>
                             <constraint firstItem="dUc-R8-w3X" firstAttribute="centerX" secondItem="oqo-8V-Slp" secondAttribute="centerX" id="HxX-1I-cUH"/>
+                            <constraint firstItem="e02-FO-JUx" firstAttribute="trailing" secondItem="nIa-cy-JxJ" secondAttribute="trailing" id="OEG-cA-MiX"/>
                             <constraint firstAttribute="trailingMargin" secondItem="nIa-cy-JxJ" secondAttribute="trailing" constant="-16" id="VzR-Uo-Tad"/>
                             <constraint firstAttribute="centerY" secondItem="oqo-8V-Slp" secondAttribute="centerY" id="WVj-Cp-reY"/>
                             <constraint firstItem="dUc-R8-w3X" firstAttribute="trailing" secondItem="nIa-cy-JxJ" secondAttribute="trailing" constant="-16" id="Xsd-ne-Ris"/>
@@ -177,6 +189,7 @@
                             <constraint firstItem="oqo-8V-Slp" firstAttribute="trailing" secondItem="nIa-cy-JxJ" secondAttribute="trailing" id="mUq-Wi-5o1"/>
                             <constraint firstItem="Thw-SM-0jb" firstAttribute="top" secondItem="XnH-lK-eGn" secondAttribute="bottom" constant="8" symbolic="YES" id="mu4-5b-orM"/>
                             <constraint firstItem="Thw-SM-0jb" firstAttribute="leading" secondItem="dUc-R8-w3X" secondAttribute="leading" id="uyo-zK-5sn"/>
+                            <constraint firstItem="e02-FO-JUx" firstAttribute="top" secondItem="dUc-R8-w3X" secondAttribute="top" id="vxo-u6-uHq"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ddY-5l-KVm"/>
