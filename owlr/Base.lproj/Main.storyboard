@@ -160,6 +160,9 @@
                                     <segue destination="SVC-Yn-o1C" kind="push" identifier="PushSegue" id="Max-rw-YEM"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Thw-SM-0jb">
+                                <rect key="frame" x="16" y="28" width="37" height="37"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="deviceRGB"/>
                         <constraints>
@@ -172,12 +175,15 @@
                             <constraint firstItem="aD9-qd-J7Y" firstAttribute="top" secondItem="dUc-R8-w3X" secondAttribute="bottom" constant="8" symbolic="YES" id="YPN-JN-84f"/>
                             <constraint firstItem="oqo-8V-Slp" firstAttribute="bottom" secondItem="aD9-qd-J7Y" secondAttribute="top" id="fgK-SG-iGa"/>
                             <constraint firstItem="oqo-8V-Slp" firstAttribute="trailing" secondItem="nIa-cy-JxJ" secondAttribute="trailing" id="mUq-Wi-5o1"/>
+                            <constraint firstItem="Thw-SM-0jb" firstAttribute="top" secondItem="XnH-lK-eGn" secondAttribute="bottom" constant="8" symbolic="YES" id="mu4-5b-orM"/>
+                            <constraint firstItem="Thw-SM-0jb" firstAttribute="leading" secondItem="dUc-R8-w3X" secondAttribute="leading" id="uyo-zK-5sn"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ddY-5l-KVm"/>
                     <connections>
                         <outlet property="button" destination="nIa-cy-JxJ" id="Gtg-yP-BtC"/>
                         <outlet property="imageView" destination="oqo-8V-Slp" id="g6J-R5-Uvn"/>
+                        <outlet property="loader" destination="Thw-SM-0jb" id="4bt-u7-lYa"/>
                         <outlet property="textView" destination="dUc-R8-w3X" id="1BK-k7-4el"/>
                     </connections>
                 </viewController>

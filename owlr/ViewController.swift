@@ -19,12 +19,11 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var button: UIButton!
-    @IBOutlet weak var searchButton: UIButton!
     @IBOutlet weak var radiusLabel: UILabel!
-    @IBOutlet weak var searchHashtags: UITextField!
     @IBOutlet weak var radiusSlider: UISlider!
-    
+    @IBOutlet weak var loader: UIActivityIndicatorView!
     @IBOutlet weak var mapView: MKMapView!
+    
     var locationManager:CLLocationManager!
     var isImage1:Bool = false
     
@@ -133,6 +132,10 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
             self.currentLocation = currentLocation
             mapView.removeAnnotations(mapView.annotations)
             mapView.addAnnotation(ann)
+        }
+        
+        if loader != nil {
+            loader.stopAnimating()
         }
     }
     
