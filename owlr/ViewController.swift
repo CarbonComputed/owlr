@@ -34,7 +34,7 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     var currentImage : Photo?
     var photoDictionary = [String: Bool]()
     var radius : Double?
-    let maxRetry : Int = 3
+    let maxRetry : Int = 7
     var currRetry : Int = 0
     var numPhotos: Int = 50
     var currentLocation : CLLocation?
@@ -101,7 +101,7 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
             currentLocation = CLLocation(latitude: 37.331789, longitude: -122.029620)
 
         }
-        self.radius = 55
+        self.radius = 1
         println(self.radius)
         
     }
@@ -149,6 +149,7 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
         if loader != nil {
             loader.stopAnimating()
         }
+//        apiController.doOAuthInstagram()
     }
     
     func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
@@ -265,13 +266,18 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
             var idString = id!.string
             if(urlString != nil  && idString != nil && photoDictionary[urlString!] == nil ){
                 downloading += 1
-                
+                if loader != nil {
+                    loader.startAnimating()
+                }
                 ImageLoader.sharedLoader.imageForUrl(urlString!, completionHandler:{(image: UIImage?, url: String) in
                     self.currRetry = 0
                     var photo = Photo(id : idString!, photo: image!, jsonData: status, url: urlString!)
                     newPhotos.append(photo)
                     self.photoLoaded(photo)
                     if downloading == newPhotos.count {
+                        if self.loader != nil {
+                            self.loader.stopAnimating()
+                        }
                         self.allPhotosLoaded(newPhotos)
                         
                     }
@@ -290,14 +296,23 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
         }
         if failed == newStatuses.count && self.currRetry < self.maxRetry{
             //increase radius
-            self.radius! *= 2
+            if loader != nil {
+                loader.stopAnimating()
+            }
+//            self.radius! *= 2
             self.noPhotosLoaded()
         }
         if self.currRetry == self.maxRetry{
+            if loader != nil {
+                loader.stopAnimating()
+            }
             self.photoDictionary.removeAll(keepCapacity: true)
             self.noPhotosLoaded()
         }
         if self.currRetry > self.maxRetry{
+            if loader != nil {
+                loader.stopAnimating()
+            }
             println("Cant Seem to get anything")
             let alertController = UIAlertController(title: "Hmmm", message:
                 "It seems I can't find any photos at this location.  Try increasing the radius or switching locations.", preferredStyle: UIAlertControllerStyle.Alert)
@@ -468,7 +483,7 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     
     func cleanJSON(statuses: [JSONValue]) -> [[String : JSONValue]]{
         var newStatuses = [[String : JSONValue]]()
-        let fields = ["text","entities","id_str"]
+        let fields = ["text","entities","id_str","possibly_sensitive"]
         for (index, status) in enumerate(statuses){
             
             var cleanJson = [String : JSONValue]()
@@ -478,7 +493,10 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
                 cleanJson[field] = status[field]
                 
             }
-            newStatuses.append(cleanJson)
+            if cleanJson["possibly_sensitive"]?.boolValue == false{
+                newStatuses.append(cleanJson)
+
+            }
             
             
         }

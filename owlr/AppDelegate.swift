@@ -8,14 +8,30 @@
 
 import UIKit
 import CoreData
+import OAuthSwift
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate {
 
     var window: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+
         // Override point for customization after application launch.
+        return true
+    }
+
+    func application(application: UIApplication!, openURL url: NSURL!, sourceApplication: String!, annotation: AnyObject!) -> Bool {
+        println("HERE")
+        if (url.host == "oauth-callback") {
+            if (url.path!.hasPrefix("/twitter") || url.path!.hasPrefix("/flickr") || url.path!.hasPrefix("/fitbit")
+                || url.path!.hasPrefix("/withings") || url.path!.hasPrefix("/linkedin")) {
+                    OAuth1Swift.handleOpenURL(url)
+            }
+            if ( url.path!.hasPrefix("/github" ) || url.path!.hasPrefix("/instagram" ) || url.path!.hasPrefix("/foursquare") || url.path!.hasPrefix("/dropbox") || url.path!.hasPrefix("/dribbble") ) {
+                OAuth2Swift.handleOpenURL(url)
+            }
+        }
         return true
     }
 

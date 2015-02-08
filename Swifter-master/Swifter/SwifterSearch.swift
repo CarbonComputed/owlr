@@ -64,7 +64,7 @@ public extension Swifter {
         if callback != nil {
             parameters["callback"] = callback!
         }
-        
+        parameters["possibly_sensitive"] = false
         self.getJSONWithPath(path, baseURL: self.apiURL, parameters: parameters, uploadProgress: nil, downloadProgress: nil, success: {
             json, response in
 

@@ -30,6 +30,8 @@
 		70D5B6D41A86C6810037F137 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D5B6D31A86C6810037F137 /* SettingsViewController.swift */; };
 		70D5B6DB1A86EFD00037F137 /* SwifteriOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70D334381A844D83006A86D1 /* SwifteriOS.framework */; };
 		70D5B6DC1A86EFD00037F137 /* SwifteriOS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 70D334381A844D83006A86D1 /* SwifteriOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		70D5B6F21A8807C00037F137 /* OAuthSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70D5B6EB1A87F2220037F137 /* OAuthSwift.framework */; };
+		70D5B6F31A8807C00037F137 /* OAuthSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 70D5B6EB1A87F2220037F137 /* OAuthSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +84,34 @@
 			remoteGlobalIDString = 8B9F50ED1944A5AB00894629;
 			remoteInfo = SwifteriOS;
 		};
+		70D5B6E81A87F2220037F137 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 70D5B6E31A87F2220037F137 /* OAuthSwift.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F451E3C5195B8CD80051434C;
+			remoteInfo = OAuthSwiftDemo;
+		};
+		70D5B6EA1A87F2220037F137 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 70D5B6E31A87F2220037F137 /* OAuthSwift.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F435027A1A6791B200038A29;
+			remoteInfo = OAuthSwift;
+		};
+		70D5B6F01A87F23E0037F137 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 70D5B6E31A87F2220037F137 /* OAuthSwift.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = F43502791A6791B200038A29;
+			remoteInfo = OAuthSwift;
+		};
+		70D5B6F41A8807C00037F137 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 70D5B6E31A87F2220037F137 /* OAuthSwift.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = F43502791A6791B200038A29;
+			remoteInfo = OAuthSwift;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -91,6 +121,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				70D5B6F31A8807C00037F137 /* OAuthSwift.framework in Embed Frameworks */,
 				70D5B6DC1A86EFD00037F137 /* SwifteriOS.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -124,6 +155,7 @@
 		70D334441A847664006A86D1 /* imageNotFound.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imageNotFound.png; sourceTree = "<group>"; };
 		70D5B6CA1A86C4590037F137 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		70D5B6D31A86C6810037F137 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		70D5B6E31A87F2220037F137 /* OAuthSwift.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OAuthSwift.xcodeproj; path = "../../../Downloads/OAuthSwift-master/OAuthSwift.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +167,7 @@
 				70D3343F1A844DB3006A86D1 /* SwifteriOS.framework in Frameworks */,
 				70D3342C1A8442E0006A86D1 /* CoreLocation.framework in Frameworks */,
 				70D5B6DB1A86EFD00037F137 /* SwifteriOS.framework in Frameworks */,
+				70D5B6F21A8807C00037F137 /* OAuthSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,6 +184,7 @@
 		70D333FA1A83BAE2006A86D1 = {
 			isa = PBXGroup;
 			children = (
+				70D5B6E31A87F2220037F137 /* OAuthSwift.xcodeproj */,
 				70D5B6CA1A86C4590037F137 /* MapKit.framework */,
 				70D3342D1A844D83006A86D1 /* Swifter.xcodeproj */,
 				70D3342B1A8442E0006A86D1 /* CoreLocation.framework */,
@@ -239,6 +273,15 @@
 			path = images;
 			sourceTree = "<group>";
 		};
+		70D5B6E41A87F2220037F137 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				70D5B6E91A87F2220037F137 /* OAuthSwiftDemo.app */,
+				70D5B6EB1A87F2220037F137 /* OAuthSwift.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -254,7 +297,9 @@
 			buildRules = (
 			);
 			dependencies = (
+				70D5B6F11A87F23E0037F137 /* PBXTargetDependency */,
 				70D5B6DE1A86EFD00037F137 /* PBXTargetDependency */,
+				70D5B6F51A8807C00037F137 /* PBXTargetDependency */,
 			);
 			name = owlr;
 			productName = owlr;
@@ -312,6 +357,10 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = 70D5B6E41A87F2220037F137 /* Products */;
+					ProjectRef = 70D5B6E31A87F2220037F137 /* OAuthSwift.xcodeproj */;
+				},
+				{
 					ProductGroup = 70D3342E1A844D83006A86D1 /* Products */;
 					ProjectRef = 70D3342D1A844D83006A86D1 /* Swifter.xcodeproj */;
 				},
@@ -358,6 +407,20 @@
 			fileType = wrapper.cfbundle;
 			path = SwifterDemoMacTests.xctest;
 			remoteRef = 70D3343D1A844D83006A86D1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		70D5B6E91A87F2220037F137 /* OAuthSwiftDemo.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = OAuthSwiftDemo.app;
+			remoteRef = 70D5B6E81A87F2220037F137 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		70D5B6EB1A87F2220037F137 /* OAuthSwift.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = OAuthSwift.framework;
+			remoteRef = 70D5B6EA1A87F2220037F137 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -424,6 +487,16 @@
 			isa = PBXTargetDependency;
 			name = SwifteriOS;
 			targetProxy = 70D5B6DD1A86EFD00037F137 /* PBXContainerItemProxy */;
+		};
+		70D5B6F11A87F23E0037F137 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = OAuthSwift;
+			targetProxy = 70D5B6F01A87F23E0037F137 /* PBXContainerItemProxy */;
+		};
+		70D5B6F51A8807C00037F137 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = OAuthSwift;
+			targetProxy = 70D5B6F41A8807C00037F137 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

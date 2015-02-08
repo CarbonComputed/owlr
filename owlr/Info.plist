@@ -40,6 +40,15 @@
 	<string>Your location is used to get photos based on your surroundings.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Your location is used to get photos based on your surroundings.</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>oauth-swift</string>
+			</array>
+		</dict>
+	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
