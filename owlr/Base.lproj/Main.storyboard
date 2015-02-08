@@ -154,7 +154,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nIa-cy-JxJ">
-                                <rect key="frame" x="251" y="20" width="53" height="53"/>
+                                <rect key="frame" x="267" y="20" width="53" height="53"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="53" id="PtV-H4-W06"/>
                                     <constraint firstAttribute="height" constant="53" id="RUt-Ll-YSx"/>
@@ -178,9 +178,9 @@
                             <constraint firstAttribute="centerX" secondItem="oqo-8V-Slp" secondAttribute="centerX" id="6ta-rf-3sa"/>
                             <constraint firstItem="nIa-cy-JxJ" firstAttribute="top" secondItem="XnH-lK-eGn" secondAttribute="bottom" id="CIv-Jr-ihO"/>
                             <constraint firstItem="dUc-R8-w3X" firstAttribute="centerX" secondItem="oqo-8V-Slp" secondAttribute="centerX" id="HxX-1I-cUH"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="nIa-cy-JxJ" secondAttribute="trailing" id="VzR-Uo-Tad"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="nIa-cy-JxJ" secondAttribute="trailing" constant="-16" id="VzR-Uo-Tad"/>
                             <constraint firstAttribute="centerY" secondItem="oqo-8V-Slp" secondAttribute="centerY" id="WVj-Cp-reY"/>
-                            <constraint firstItem="dUc-R8-w3X" firstAttribute="trailing" secondItem="nIa-cy-JxJ" secondAttribute="trailing" id="Xsd-ne-Ris"/>
+                            <constraint firstItem="dUc-R8-w3X" firstAttribute="trailing" secondItem="nIa-cy-JxJ" secondAttribute="trailing" constant="-16" id="Xsd-ne-Ris"/>
                             <constraint firstItem="aD9-qd-J7Y" firstAttribute="top" secondItem="dUc-R8-w3X" secondAttribute="bottom" constant="8" symbolic="YES" id="YPN-JN-84f"/>
                         </constraints>
                     </view>
