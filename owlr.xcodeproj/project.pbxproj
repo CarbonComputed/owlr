@@ -335,11 +335,11 @@
 				TargetAttributes = {
 					70D334021A83BAE2006A86D1 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 2S3D8J8M3T;
+						DevelopmentTeam = Q3LK4635JF;
 					};
 					70D3341A1A83BAE3006A86D1 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 2S3D8J8M3T;
+						DevelopmentTeam = Q3LK4635JF;
 						TestTargetID = 70D334021A83BAE2006A86D1;
 					};
 				};

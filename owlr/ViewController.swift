@@ -34,7 +34,7 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     var currentImage : Photo?
     var photoDictionary = [String: Bool]()
     var radius : Double?
-    let maxRetry : Int = 7
+    let maxRetry : Int = 2
     var currRetry : Int = 0
     var numPhotos: Int = 50
     var currentLocation : CLLocation?
@@ -278,6 +278,7 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
                         if self.loader != nil {
                             self.loader.stopAnimating()
                         }
+                        self.currentState = State.Chilling
                         self.allPhotosLoaded(newPhotos)
                         
                     }
@@ -299,6 +300,7 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
             if loader != nil {
                 loader.stopAnimating()
             }
+            self.currentState = State.Chilling
 //            self.radius! *= 2
             self.noPhotosLoaded()
         }
@@ -306,6 +308,7 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
             if loader != nil {
                 loader.stopAnimating()
             }
+            self.currentState = State.Chilling
             self.photoDictionary.removeAll(keepCapacity: true)
             self.noPhotosLoaded()
         }
@@ -313,6 +316,7 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
             if loader != nil {
                 loader.stopAnimating()
             }
+            self.currentState = State.Chilling
             println("Cant Seem to get anything")
             let alertController = UIAlertController(title: "Hmmm", message:
                 "It seems I can't find any photos at this location.  Try increasing the radius or switching locations.", preferredStyle: UIAlertControllerStyle.Alert)
@@ -449,7 +453,7 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
         self.currRetry = 0
         println("Count \(photoQueue.count)")
         println(currentImage?.url)
-        if photoQueue.isEmpty{
+        if photoQueue.isEmpty {
             self.currentImage = nil
             self.noPhotosLoaded()
         }
