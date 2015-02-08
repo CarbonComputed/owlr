@@ -23,6 +23,7 @@
 @IBOutlet weak var radiusSlider: UISlider!
 @IBOutlet weak var mapView: MKMapView!
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+@IBOutlet weak var loader: UIActivityIndicatorView!
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 //
