@@ -21,6 +21,7 @@
 @IBOutlet weak var radiusSlider: UISlider!
 //  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 @IBOutlet weak var radiusSlider: UISlider!
+@IBOutlet weak var mapView: MKMapView!
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
@@ -78,6 +79,11 @@ class ViewController: NSViewController {
                     @IBAction func searchSwipe(sender: AnyObject) {
                     }
                     let twitterAccounts = accountStore.accountsWithAccountType(accountType)
+                    @IBOutlet var mapTapped: UITapGestureRecognizer!
+                    @IBAction func mapTapped(sender: UITapGestureRecognizer) {
+                    }
+                    @IBAction func mapTapped(sender: UITapGestureRecognizer) {
+                    }
 
                     if (twitterAccounts != nil) {
                         if twitterAccounts.count == 0 {
@@ -85,6 +91,8 @@ class ViewController: NSViewController {
                         }
                         else {
                             let twitterAccount = twitterAccounts[0] as ACAccount
+                            @IBAction func searchCircleTapped(sender: UIButton) {
+                            }
 
                             let swifter = Swifter(account: twitterAccount)
 

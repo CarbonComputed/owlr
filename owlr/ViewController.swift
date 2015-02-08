@@ -9,9 +9,13 @@
 import UIKit
 import CoreLocation
 import SwifteriOS
+import MapKit
 
+protocol LocationChangeProtocol{
+    func didUpdateLocation(location : CLLocation)
+}
 
-class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDelegate {
+class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDelegate,LocationChangeProtocol {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var button: UIButton!
@@ -20,9 +24,11 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     @IBOutlet weak var searchHashtags: UITextField!
     @IBOutlet weak var radiusSlider: UISlider!
     
+    @IBOutlet weak var mapView: MKMapView!
     var locationManager:CLLocationManager!
     var isImage1:Bool = false
     
+    var locationDelegate : LocationChangeProtocol?
     // vars for the swip func: ali did this
     var photoQueue : [Photo] = []
     var hold : [Photo] = []
@@ -64,10 +70,33 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
         
     }
     
+    @IBAction func searchCircleTapped(sender: AnyObject) {
+        self.locationDelegate?.didUpdateLocation(self.currentLocation!)
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    @IBAction func mapTapped(recognizer :UITapGestureRecognizer)
+    {
+        var point = recognizer.locationInView(self.mapView)
+        var tapPoint = self.mapView.convertPoint(point, toCoordinateFromView: self.mapView)
+        var ann = MKPointAnnotation()
+        ann.coordinate = tapPoint
+        var currentLocation = CLLocation(latitude: ann.coordinate.latitude, longitude: ann.coordinate.longitude)
+        self.currentLocation = currentLocation
+        println(self.currentLocation)
+        mapView.addAnnotation(ann)
+//        println(self.currentLocation)
+        
+    }
+    
+    
     required init(coder aDecoder: NSCoder) {
         super.init(coder : aDecoder)
         currentImage = nil
-        currentLocation = CLLocation(latitude: 37.331789, longitude: -122.029620)
+        if(currentLocation==nil){
+            currentLocation = CLLocation(latitude: 37.331789, longitude: -122.029620)
+
+        }
         self.radius = self.defaultRadius
     }
     
@@ -90,7 +119,11 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
         var edgeGesture : UIScreenEdgePanGestureRecognizer = UIScreenEdgePanGestureRecognizer(target: self, action:"respondToSwipeGesture:")
         edgeGesture.edges = UIRectEdge.Left
         self.view.addGestureRecognizer(edgeGesture)
-        
+        if(self.mapView != nil){
+            var coord = self.currentLocation?.coordinate
+            self.mapView.centerCoordinate = coord!
+
+        }
     }
     
     func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
@@ -171,12 +204,15 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     
     func swap( nextImage: Photo){
         let toImage = nextImage.photo
-        UIView.transitionWithView(self.imageView,
-            duration:0.6,
-            options: .TransitionCrossDissolve,
-            animations: { self.imageView.image = toImage },
-            completion: nil)
-        updateText(nextImage.text!)
+        if(self.imageView != nil){
+            UIView.transitionWithView(self.imageView,
+                duration:0.6,
+                options: .TransitionCrossDissolve,
+                animations: { self.imageView.image = toImage },
+                completion: nil)
+            updateText(nextImage.text!)
+        }
+
     }
     
     func showSearch()
@@ -341,7 +377,9 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     
     
     
-    
+    func didUpdateLocation(location : CLLocation){
+        self.currentLocation = location
+    }
     
     
     
@@ -367,7 +405,7 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
                 self.currentImage = photoQueue[0]
             }
             
-            
+            println(self.currentLocation)
             if photoQueue.count <= 2 && self.currentImage != nil{//and not already downloading
                 var maxId = currentImage?.id
                 dispatch_async(dispatch_get_main_queue()) {
@@ -414,9 +452,19 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     func loadNewImage(nextImage: UIImage){
         imageView.image = nextImage
     }
+    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
+        if (segue.identifier == "PushSegue") {
+            // pass data to next view
+            var next = segue.destinationViewController as ViewController
+            next.locationDelegate = self
+        }
+    }
     
     @IBAction func circleTapped(sender:UIButton) {
+        
         self.navigationController?.popViewControllerAnimated(true)
+//        var coord = self.currentLocation?.coordinate
+//        self.mapView.centerCoordinate = coord!
     }
     
     @IBAction func handlePan(recognizer:UIPanGestureRecognizer) {

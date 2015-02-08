@@ -23,6 +23,8 @@
 		70D3343F1A844DB3006A86D1 /* SwifteriOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70D334381A844D83006A86D1 /* SwifteriOS.framework */; };
 		70D334451A847664006A86D1 /* checkers.png in Resources */ = {isa = PBXBuildFile; fileRef = 70D334431A847664006A86D1 /* checkers.png */; };
 		70D334461A847664006A86D1 /* imageNotFound.png in Resources */ = {isa = PBXBuildFile; fileRef = 70D334441A847664006A86D1 /* imageNotFound.png */; };
+		70D5B6CB1A86C4590037F137 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70D5B6CA1A86C4590037F137 /* MapKit.framework */; };
+		70D5B6D41A86C6810037F137 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D5B6D31A86C6810037F137 /* SettingsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +93,8 @@
 		70D3342D1A844D83006A86D1 /* Swifter.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Swifter.xcodeproj; path = "Swifter-master/Swifter.xcodeproj"; sourceTree = "<group>"; };
 		70D334431A847664006A86D1 /* checkers.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkers.png; sourceTree = "<group>"; };
 		70D334441A847664006A86D1 /* imageNotFound.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imageNotFound.png; sourceTree = "<group>"; };
+		70D5B6CA1A86C4590037F137 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		70D5B6D31A86C6810037F137 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +102,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70D5B6CB1A86C4590037F137 /* MapKit.framework in Frameworks */,
 				70D3343F1A844DB3006A86D1 /* SwifteriOS.framework in Frameworks */,
 				70D3342C1A8442E0006A86D1 /* CoreLocation.framework in Frameworks */,
 			);
@@ -116,6 +121,7 @@
 		70D333FA1A83BAE2006A86D1 = {
 			isa = PBXGroup;
 			children = (
+				70D5B6CA1A86C4590037F137 /* MapKit.framework */,
 				70D3342D1A844D83006A86D1 /* Swifter.xcodeproj */,
 				70D3342B1A8442E0006A86D1 /* CoreLocation.framework */,
 				70D334051A83BAE2006A86D1 /* owlr */,
@@ -147,6 +153,7 @@
 				70D3340A1A83BAE2006A86D1 /* owlr.xcdatamodeld */,
 				70D334061A83BAE2006A86D1 /* Supporting Files */,
 				3F28F9071A84409100786801 /* APIController.swift */,
+				70D5B6D31A86C6810037F137 /* SettingsViewController.swift */,
 			);
 			path = owlr;
 			sourceTree = "<group>";
@@ -349,6 +356,7 @@
 			files = (
 				3F6152601A85BE8F00990F99 /* Photo.swift in Sources */,
 				3F28F9081A84409100786801 /* APIController.swift in Sources */,
+				70D5B6D41A86C6810037F137 /* SettingsViewController.swift in Sources */,
 				70D3340E1A83BAE3006A86D1 /* ViewController.swift in Sources */,
 				3F61525F1A85BE8F00990F99 /* ImageLoader.swift in Sources */,
 				70D334091A83BAE2006A86D1 /* AppDelegate.swift in Sources */,
