@@ -26,6 +26,8 @@
 		70D334461A847664006A86D1 /* imageNotFound.png in Resources */ = {isa = PBXBuildFile; fileRef = 70D334441A847664006A86D1 /* imageNotFound.png */; };
 		70D5B6CB1A86C4590037F137 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70D5B6CA1A86C4590037F137 /* MapKit.framework */; };
 		70D5B6D41A86C6810037F137 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D5B6D31A86C6810037F137 /* SettingsViewController.swift */; };
+		70D5B6DB1A86EFD00037F137 /* SwifteriOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70D334381A844D83006A86D1 /* SwifteriOS.framework */; };
+		70D5B6DC1A86EFD00037F137 /* SwifteriOS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 70D334381A844D83006A86D1 /* SwifteriOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,7 +73,28 @@
 			remoteGlobalIDString = 8B300C5A1944AECB00993175;
 			remoteInfo = SwifterDemoMacTests;
 		};
+		70D5B6DD1A86EFD00037F137 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 70D3342D1A844D83006A86D1 /* Swifter.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8B9F50ED1944A5AB00894629;
+			remoteInfo = SwifteriOS;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		70D5B6DF1A86EFD00037F137 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				70D5B6DC1A86EFD00037F137 /* SwifteriOS.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		3F28F9071A84409100786801 /* APIController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIController.swift; sourceTree = "<group>"; };
@@ -107,6 +130,7 @@
 				70D5B6CB1A86C4590037F137 /* MapKit.framework in Frameworks */,
 				70D3343F1A844DB3006A86D1 /* SwifteriOS.framework in Frameworks */,
 				70D3342C1A8442E0006A86D1 /* CoreLocation.framework in Frameworks */,
+				70D5B6DB1A86EFD00037F137 /* SwifteriOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -219,10 +243,12 @@
 				70D333FF1A83BAE2006A86D1 /* Sources */,
 				70D334001A83BAE2006A86D1 /* Frameworks */,
 				70D334011A83BAE2006A86D1 /* Resources */,
+				70D5B6DF1A86EFD00037F137 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				70D5B6DE1A86EFD00037F137 /* PBXTargetDependency */,
 			);
 			name = owlr;
 			productName = owlr;
@@ -258,6 +284,7 @@
 				TargetAttributes = {
 					70D334021A83BAE2006A86D1 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = Q3LK4635JF;
 					};
 					70D3341A1A83BAE3006A86D1 = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -384,6 +411,11 @@
 			target = 70D334021A83BAE2006A86D1 /* owlr */;
 			targetProxy = 70D3341C1A83BAE3006A86D1 /* PBXContainerItemProxy */;
 		};
+		70D5B6DE1A86EFD00037F137 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwifteriOS;
+			targetProxy = 70D5B6DD1A86EFD00037F137 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -489,9 +521,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = owlr/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -499,9 +535,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = owlr/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

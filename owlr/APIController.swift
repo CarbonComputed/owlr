@@ -36,7 +36,10 @@ class APIController  {
 //              println("Success")
             
         }) { (error) -> Void in
-            println(error)
+            dispatch_async(dispatch_get_main_queue()) {
+                self.delegate?.didReceiveAPIResults([])
+                println(error)
+            }
         }
     }
     

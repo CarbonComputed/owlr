@@ -34,11 +34,11 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     var hold : [Photo] = []
     var currentImage : Photo?
     var photoDictionary = [String: Bool]()
-    var radius : Double = 1
+    var radius : Double = 10
     var defaultRadius : Double = 1
-    let maxRetry : Int = 5
+    let maxRetry : Int = 3
     var currRetry : Int = 0
-    
+    var numPhotos: Int = 50
     var currentLocation : CLLocation?
     var currentState : State = State.Chilling
     
@@ -83,9 +83,9 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
         ann.coordinate = tapPoint
         var currentLocation = CLLocation(latitude: ann.coordinate.latitude, longitude: ann.coordinate.longitude)
         self.currentLocation = currentLocation
-        println(self.currentLocation)
+        mapView.removeAnnotations(mapView.annotations)
         mapView.addAnnotation(ann)
-//        println(self.currentLocation)
+
         
     }
     
@@ -157,14 +157,13 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
         
         let location = locations.last as CLLocation
         self.currentLocation = location
-        if currentState != State.Downloading{
             dispatch_async(dispatch_get_main_queue()) {
                 self.currentState = State.Downloading
-                self.apiController.loadImages(location.coordinate.latitude,long: location.coordinate.longitude,radius: self.radius,count: 5, maxId: nil)
+                self.apiController.loadImages(location.coordinate.latitude,long: location.coordinate.longitude,radius: self.radius,count: self.numPhotos, maxId: nil)
                 println("didUpdateLocations:  \(location.coordinate.latitude), \(location.coordinate.longitude)")
                 
             }
-        }
+        
         locationManager.stopUpdatingLocation()
         
     }
@@ -228,9 +227,8 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
         var newPhotos : [Photo] = []
         
         println("NEW \(newStatuses.count)")
-        if(newStatuses.isEmpty){
-            self.noPhotosLoaded()
-        }
+
+        
         var downloading = 0
         var failed = 0
         for status in newStatuses{
@@ -256,21 +254,26 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
             }
             else{
                 failed += 1
-                if failed == newStatuses.count && self.currRetry < self.maxRetry{
-                    //increase radius
-                    self.radius *= 2
-                    self.noPhotosLoaded()
-                }
-                if self.currRetry >= self.maxRetry{
-                    self.radius = self.defaultRadius
-                    self.photoDictionary.removeAll(keepCapacity: true)
-                    self.noPhotosLoaded()
-                }
+
             }
             
             
             
             
+        }
+        if failed == newStatuses.count && self.currRetry < self.maxRetry{
+            //increase radius
+            self.radius *= 2
+            self.noPhotosLoaded()
+        }
+        if self.currRetry == self.maxRetry{
+            self.radius = self.defaultRadius
+            self.photoDictionary.removeAll(keepCapacity: true)
+            self.noPhotosLoaded()
+        }
+        if self.currRetry > self.maxRetry{
+            println("Cant Seem to get anything")
+//            self.currRetry = 0
         }
         
         
@@ -312,12 +315,13 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     }
     
     func noPhotosLoaded(){
+        println(self.currRetry)
         self.currRetry += 1
         dispatch_async(dispatch_get_main_queue()) {
             var long = self.currentLocation?.coordinate.longitude
             var lat = self.currentLocation?.coordinate.latitude
             self.currentState = State.Downloading
-            self.apiController.loadImages(lat!, long: long!,radius: self.radius,count: 5, maxId : nil)
+            self.apiController.loadImages(lat!, long: long!,radius: self.radius,count: self.numPhotos, maxId : nil)
         }
     }
     
@@ -380,6 +384,14 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     
     func didUpdateLocation(location : CLLocation){
         self.currentLocation = location
+        self.photoQueue = []
+        self.currentImage = nil
+        dispatch_async(dispatch_get_main_queue()) {
+            var long = self.currentLocation?.coordinate.longitude
+            var lat = self.currentLocation?.coordinate.latitude
+            self.currentState = State.Downloading
+            self.apiController.loadImages(lat!, long: long!,radius: self.radius,count: self.numPhotos, maxId : nil)
+        }
     }
     
     
@@ -388,6 +400,7 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     
     // moves current image to a backup array, and then sets the first element in array of photoqueue to the current image
     func swipe(){
+        self.currRetry = 0
         println("Count \(photoQueue.count)")
         println(currentImage?.url)
         if photoQueue.isEmpty{
@@ -413,7 +426,7 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
                     var long = self.currentLocation?.coordinate.longitude
                     var lat = self.currentLocation?.coordinate.latitude
                     self.currentState = State.Downloading
-                    self.apiController.loadImages(lat!, long: long!,radius: self.radius,count: 5, maxId : maxId)
+                    self.apiController.loadImages(lat!, long: long!,radius: self.radius,count: self.numPhotos, maxId : maxId)
                 }
             }
             
