@@ -203,8 +203,9 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     }
     
     func swap( nextImage: Photo){
-        let toImage = nextImage.photo
-        if(self.imageView != nil){
+
+        if self.imageView != nil{
+            let toImage = nextImage.photo
             UIView.transitionWithView(self.imageView,
                 duration:0.6,
                 options: .TransitionCrossDissolve,
