@@ -8,6 +8,7 @@
 
 import Foundation
 import SwifteriOS
+import UIKit
 
 protocol APIControllerProtocol {
     func didReceiveAPIResults(statuses: [JSONValue]?)
@@ -16,11 +17,14 @@ protocol APIControllerProtocol {
 class APIController  {
     var delegate: APIControllerProtocol?
     
+    var view : ViewController?
+    
     let swifter = Swifter(consumerKey: "tkbaXySRl6Fd8XictSd9S9vlr", consumerSecret: "2M87groo1SJlNAQti2JLdToZiD6IGUQce5ykOk50UIkyz8gxKC")
     
-    
     init(){
-        
+    }
+    init(view : ViewController){
+        self.view = view
     }
     
     // Send twitter specs, get back images
@@ -38,6 +42,10 @@ class APIController  {
         }) { (error) -> Void in
             dispatch_async(dispatch_get_main_queue()) {
                 self.delegate?.didReceiveAPIResults([])
+                let alertController = UIAlertController(title: "Uh-Oh", message:
+                    "I think we hit twitters rate limit...", preferredStyle: UIAlertControllerStyle.Alert)
+                alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
+                self.view?.presentViewController(alertController, animated: true, completion: nil)
                 println(error)
             }
         }

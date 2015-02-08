@@ -34,14 +34,16 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     var hold : [Photo] = []
     var currentImage : Photo?
     var photoDictionary = [String: Bool]()
-    var radius : Double = 10
+    var radius : Double = 50
     var defaultRadius : Double = 1
     let maxRetry : Int = 3
     var currRetry : Int = 0
     var numPhotos: Int = 50
     var currentLocation : CLLocation?
     var currentState : State = State.Chilling
-    
+    var locationUpdated : Bool = false
+    var apiController = APIController()
+
     enum State{
         case Downloading
         case Chilling
@@ -57,7 +59,6 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     }
     
     @IBOutlet var edgeRight: UIScreenEdgePanGestureRecognizer!
-    let apiController = APIController()
     
     
     @IBOutlet var swipeRight: UISwipeGestureRecognizer!
@@ -93,6 +94,10 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     required init(coder aDecoder: NSCoder) {
         super.init(coder : aDecoder)
         currentImage = nil
+        var vc = self
+
+        self.apiController = APIController(view : vc)
+
         if(currentLocation==nil){
             currentLocation = CLLocation(latitude: 37.331789, longitude: -122.029620)
 
@@ -122,7 +127,12 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
         if(self.mapView != nil){
             var coord = self.currentLocation?.coordinate
             self.mapView.centerCoordinate = coord!
-
+            var ann = MKPointAnnotation()
+            ann.coordinate = coord!
+            var currentLocation = CLLocation(latitude: ann.coordinate.latitude, longitude: ann.coordinate.longitude)
+            self.currentLocation = currentLocation
+            mapView.removeAnnotations(mapView.annotations)
+            mapView.addAnnotation(ann)
         }
     }
     
@@ -154,17 +164,19 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     
     
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-        
-        let location = locations.last as CLLocation
-        self.currentLocation = location
+        if !locationUpdated{
+            let location = locations.last as CLLocation
+            self.currentLocation = location
             dispatch_async(dispatch_get_main_queue()) {
                 self.currentState = State.Downloading
                 self.apiController.loadImages(location.coordinate.latitude,long: location.coordinate.longitude,radius: self.radius,count: self.numPhotos, maxId: nil)
                 println("didUpdateLocations:  \(location.coordinate.latitude), \(location.coordinate.longitude)")
                 
             }
-        
-        locationManager.stopUpdatingLocation()
+            locationUpdated = true
+            locationManager.stopUpdatingLocation()
+        }
+
         
     }
     
@@ -273,6 +285,11 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
         }
         if self.currRetry > self.maxRetry{
             println("Cant Seem to get anything")
+            let alertController = UIAlertController(title: "Hmmm", message:
+                "It seems I can't find any photos at this location.  Try increasing the radius or switching locations.", preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
+            
+            self.presentViewController(alertController, animated: true, completion: nil)
 //            self.currRetry = 0
         }
         
@@ -337,16 +354,6 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
             swap(currentImage!)
             
         }
-        //        if currentImage == nil && photoDictionary[photoQueue[0].url!] != nil{
-        //            swipe()
-        //        }
-        //        if self.currentState == State.Chilling && photoQueue.isEmpty{
-        //            swipe()
-        //        }
-        //        if currentImage == nil && photoQueue.count != 0 && self.imageView != nil{
-        //            currentImage = photoQueue[0]
-        //            swap(currentImage?.photo)
-        //        }
         
         
     }
@@ -386,6 +393,7 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
         self.currentLocation = location
         self.photoQueue = []
         self.currentImage = nil
+        self.currRetry = 0
         dispatch_async(dispatch_get_main_queue()) {
             var long = self.currentLocation?.coordinate.longitude
             var lat = self.currentLocation?.coordinate.latitude
@@ -420,8 +428,8 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
             }
             
             println(self.currentLocation)
-            if photoQueue.count <= 2 && self.currentImage != nil{//and not already downloading
-                var maxId = currentImage?.id
+            if photoQueue.count <= 10 && self.currentImage != nil{//and not already downloading
+                var maxId = photoQueue[photoQueue.count-1].id
                 dispatch_async(dispatch_get_main_queue()) {
                     var long = self.currentLocation?.coordinate.longitude
                     var lat = self.currentLocation?.coordinate.latitude
@@ -471,6 +479,8 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
             // pass data to next view
             var next = segue.destinationViewController as ViewController
             next.locationDelegate = self
+            next.currentLocation = self.currentLocation
+            next.locationUpdated = true
         }
     }
     
