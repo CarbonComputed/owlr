@@ -12,7 +12,7 @@ import SwifteriOS
 import MapKit
 
 protocol LocationChangeProtocol{
-    func didUpdateLocation(location : CLLocation)
+    func didUpdateLocation(location : CLLocation, radius : Double)
 }
 
 class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDelegate,LocationChangeProtocol {
@@ -34,8 +34,7 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     var hold : [Photo] = []
     var currentImage : Photo?
     var photoDictionary = [String: Bool]()
-    var radius : Double = 50
-    var defaultRadius : Double = 1
+    var radius : Double?
     let maxRetry : Int = 3
     var currRetry : Int = 0
     var numPhotos: Int = 50
@@ -51,6 +50,7 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     
     @IBAction func updateRadiusLabel(sender: AnyObject) {
         let radiusNum = Int(radiusSlider.value)
+        self.radius = Double(radiusSlider.value)
         radiusLabel.text = "\(radiusNum)"
     }
     
@@ -72,7 +72,7 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     }
     
     @IBAction func searchCircleTapped(sender: AnyObject) {
-        self.locationDelegate?.didUpdateLocation(self.currentLocation!)
+        self.locationDelegate?.didUpdateLocation(self.currentLocation!, radius: self.radius!)
         self.navigationController?.popViewControllerAnimated(true)
     }
     
@@ -102,7 +102,18 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
             currentLocation = CLLocation(latitude: 37.331789, longitude: -122.029620)
 
         }
-        self.radius = self.defaultRadius
+        self.radius = 55
+        println(self.radius)
+        
+    }
+    
+    func updateSlider(){
+        println(self.radius)
+        if self.radius != nil && self.radiusSlider != nil{
+            println(self.radius)
+            self.radiusSlider.setValue(Float(self.radius!), animated: true)
+            radiusLabel.text = "\(Int(self.radius!))"
+        }
     }
     
     override func viewDidLoad() {
@@ -134,6 +145,7 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
             mapView.removeAnnotations(mapView.annotations)
             mapView.addAnnotation(ann)
         }
+        self.updateSlider()
     }
     
     func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
@@ -169,7 +181,7 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
             self.currentLocation = location
             dispatch_async(dispatch_get_main_queue()) {
                 self.currentState = State.Downloading
-                self.apiController.loadImages(location.coordinate.latitude,long: location.coordinate.longitude,radius: self.radius,count: self.numPhotos, maxId: nil)
+                self.apiController.loadImages(location.coordinate.latitude,long: location.coordinate.longitude,radius: self.radius!,count: self.numPhotos, maxId: nil)
                 println("didUpdateLocations:  \(location.coordinate.latitude), \(location.coordinate.longitude)")
                 
             }
@@ -250,7 +262,7 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
             var idString = id!.string
             if(urlString != nil  && idString != nil && photoDictionary[urlString!] == nil ){
                 downloading += 1
-                self.radius = self.defaultRadius
+                
                 ImageLoader.sharedLoader.imageForUrl(urlString!, completionHandler:{(image: UIImage?, url: String) in
                     self.currRetry = 0
                     var photo = Photo(id : idString!, photo: image!, jsonData: status, url: urlString!)
@@ -275,11 +287,10 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
         }
         if failed == newStatuses.count && self.currRetry < self.maxRetry{
             //increase radius
-            self.radius *= 2
+            self.radius! *= 2
             self.noPhotosLoaded()
         }
         if self.currRetry == self.maxRetry{
-            self.radius = self.defaultRadius
             self.photoDictionary.removeAll(keepCapacity: true)
             self.noPhotosLoaded()
         }
@@ -338,7 +349,7 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
             var long = self.currentLocation?.coordinate.longitude
             var lat = self.currentLocation?.coordinate.latitude
             self.currentState = State.Downloading
-            self.apiController.loadImages(lat!, long: long!,radius: self.radius,count: self.numPhotos, maxId : nil)
+            self.apiController.loadImages(lat!, long: long!,radius: self.radius!,count: self.numPhotos, maxId : nil)
         }
     }
     
@@ -389,16 +400,25 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     
     
     
-    func didUpdateLocation(location : CLLocation){
+    func didUpdateLocation(location : CLLocation, radius: Double){
+        
+        if location.coordinate.latitude == self.currentLocation?.coordinate.latitude &&
+        location.coordinate.longitude == self.currentLocation?.coordinate.longitude
+        && radius == self.radius{
+            return
+        }
         self.currentLocation = location
         self.photoQueue = []
         self.currentImage = nil
         self.currRetry = 0
+        self.radius = radius
+        println(self.radius)
+
         dispatch_async(dispatch_get_main_queue()) {
             var long = self.currentLocation?.coordinate.longitude
             var lat = self.currentLocation?.coordinate.latitude
             self.currentState = State.Downloading
-            self.apiController.loadImages(lat!, long: long!,radius: self.radius,count: self.numPhotos, maxId : nil)
+            self.apiController.loadImages(lat!, long: long!,radius: self.radius!,count: self.numPhotos, maxId : nil)
         }
     }
     
@@ -434,7 +454,7 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
                     var long = self.currentLocation?.coordinate.longitude
                     var lat = self.currentLocation?.coordinate.latitude
                     self.currentState = State.Downloading
-                    self.apiController.loadImages(lat!, long: long!,radius: self.radius,count: self.numPhotos, maxId : maxId)
+                    self.apiController.loadImages(lat!, long: long!,radius: self.radius!,count: self.numPhotos, maxId : maxId)
                 }
             }
             
@@ -481,7 +501,11 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
             next.locationDelegate = self
             next.currentLocation = self.currentLocation
             next.locationUpdated = true
+            println("SETRAD \(self.radius!)")
+            next.radius = self.radius
+            
         }
+        
     }
     
     @IBAction func circleTapped(sender:UIButton) {
