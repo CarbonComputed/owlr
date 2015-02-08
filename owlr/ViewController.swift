@@ -250,6 +250,7 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
     
     
     func didReceiveAPIResults(statuses: [JSONValue]?){
+        self.currentState = State.Chilling
         var newStatuses = cleanJSON(statuses!)
         var downloaded = 0
         var newPhotos : [Photo] = []
@@ -269,6 +270,7 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
                 if loader != nil {
                     loader.startAnimating()
                 }
+                self.currentState = State.Downloading
                 ImageLoader.sharedLoader.imageForUrl(urlString!, completionHandler:{(image: UIImage?, url: String) in
                     self.currRetry = 0
                     var photo = Photo(id : idString!, photo: image!, jsonData: status, url: urlString!)
@@ -455,7 +457,13 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
         println(currentImage?.url)
         if photoQueue.isEmpty {
             self.currentImage = nil
-            self.noPhotosLoaded()
+            if self.currentState == State.Chilling{
+                self.noPhotosLoaded()
+
+            }
+            else{
+                println("Already Downloading")
+            }
         }
         else{
             photoDictionary[photoQueue[0].url!] = true
@@ -470,7 +478,7 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
             }
             
             println(self.currentLocation)
-            if photoQueue.count <= 10 && self.currentImage != nil{//and not already downloading
+            if photoQueue.count <= 10 && self.currentImage != nil && self.currentState == State.Chilling{//and not already downloading
                 var maxId = photoQueue[photoQueue.count-1].id
                 dispatch_async(dispatch_get_main_queue()) {
                     var long = self.currentLocation?.coordinate.longitude
@@ -478,6 +486,9 @@ class ViewController: UIViewController,APIControllerProtocol,CLLocationManagerDe
                     self.currentState = State.Downloading
                     self.apiController.loadImages(lat!, long: long!,radius: self.radius!,count: self.numPhotos, maxId : maxId)
                 }
+            }
+            else{
+                println("Already Downloading")
             }
             
         }
