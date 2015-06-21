@@ -7,83 +7,107 @@
 //
 
 import Foundation
-import SwifteriOS
 import UIKit
 import OAuthSwift
 
 protocol APIControllerProtocol {
-    func didReceiveAPIResults(statuses: [JSONValue]?)
+    func setMaxID(id : String)
+    func loadPhoto(photo: Photo)
+    func apiError()
 }
 
 class APIController  {
     var delegate: APIControllerProtocol?
+    var photoDictionary = Set<String>()
+    lazy var apiCallsInProgress = [String:SearchOperation]()
+
+    lazy var apiCallQueue:NSOperationQueue = {
+        var queue = NSOperationQueue()
+        queue.name = "API Call Queue"
+        queue.maxConcurrentOperationCount = 1
+        return queue
+    }()
     
-    var view : ViewController?
-    
-    let swifter = Swifter(consumerKey: "tkbaXySRl6Fd8XictSd9S9vlr", consumerSecret: "2M87groo1SJlNAQti2JLdToZiD6IGUQce5ykOk50UIkyz8gxKC")
-    
+    lazy var downloadsInProgress = [String:ImageDownloader]()
+    lazy var downloadQueue:NSOperationQueue = {
+        var queue = NSOperationQueue()
+        queue.name = "Image Download Queue"
+        return queue
+    }()
+
     init(){
     }
-    init(view : ViewController){
-        self.view = view
-    }
     
-    func doOAuthInstagram(){
-        let oauthswift = OAuth2Swift(
-            consumerKey:    "6e37389055434819af596615c633b78a",
-            consumerSecret: "d0e3198127cd4f53b8075aa416a69aad",
-            authorizeUrl:   "https://api.instagram.com/oauth/authorize",
-            responseType:   "token"
-        )
-        oauthswift.authorizeWithCallbackURL( NSURL(string: "oauth-swift://oauth-callback/instagram")!, scope: "likes+comments", state:"INSTAGRAM", success: {
-            credential, response in
-            println("Instagram", message: "oauth_token:\(credential.oauth_token)")
-            let url :String = "https://api.instagram.com/v1/users/1574083/?access_token=\(credential.oauth_token)"
-            let parameters :Dictionary = Dictionary<String, AnyObject>()
-            oauthswift.client.get(url, parameters: parameters,
-                success: {
-                    data, response in
-                    let jsonDict: AnyObject! = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil)
-                    println(jsonDict)
-                }, failure: {(error:NSError!) -> Void in
-                    println(error)
-            })
-            }, failure: {(error:NSError!) -> Void in
-                println(error.localizedDescription)
-        })
-    }
     
-    // Send twitter specs, get back images
-    func loadImages(lat: Double, long: Double, radius: Double, count: Int, maxId: String?) {
-        if self.view?.loader != nil{
-            self.view?.loader.startAnimating()
-        }
-        var q = "filter:images"
-        var geocode = "\(lat),\(long),\(radius)mi"
-        swifter.getSearchTweetsWithQuery(q, geocode: geocode, lang: nil, locale: nil, resultType: "recent", count: count, until: nil, sinceID: nil, maxID: maxId, includeEntities: nil, callback: nil, success: { (statuses: [JSONValue]?, searchMetadata) -> Void in
-            if self.view?.loader != nil{
-                self.view?.loader.stopAnimating()
-            }
-              dispatch_async(dispatch_get_main_queue()) {
-                    self.delegate?.didReceiveAPIResults(statuses)
-                    println("Success")
-                }
+    
+    func loadAPIRequest(lat: Double, long: Double, radius: Double, count: Int, maxId: String?){
 
-//              println("Success")
-            
-        }) { (error) -> Void in
-            if self.view?.loader != nil{
-                self.view?.loader.stopAnimating()
+        let searchOp = TwitterSearchOp(lat: lat, long: long, radius: radius, count: count, maxId: maxId)
+        if apiCallsInProgress[searchOp.toString()] != nil {
+            return
+        }
+        
+        
+        searchOp.completionBlock = {
+            if searchOp.cancelled {
+                return
             }
-            dispatch_async(dispatch_get_main_queue()) {
-                self.delegate?.didReceiveAPIResults([])
-                let alertController = UIAlertController(title: "Uh-Oh", message:
-                    "I think we hit twitters rate limit...", preferredStyle: UIAlertControllerStyle.Alert)
-                alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
-                self.view?.presentViewController(alertController, animated: true, completion: nil)
-                println(error)
+            println("API Call Completed")
+            self.apiCallsInProgress.removeValueForKey(searchOp.toString())
+
+            if searchOp.photos.count > 0{
+                if !searchOp.cancelled{
+                    self.delegate?.setMaxID(searchOp.photos[searchOp.photos.count-1].id)
+                }
+            }
+            if !searchOp.cancelled{
+                self.retrieveImages(searchOp.photos)
+            }
+
+        }
+        println("API Call Added")
+        self.apiCallsInProgress[searchOp.toString()] = searchOp
+        self.apiCallQueue.addOperation(searchOp)
+    }
+
+    func startDownloadForRecord(photo: Photo){
+        if let downloadOperation = downloadsInProgress[photo.url.absoluteString!] {
+            return
+        }
+        
+        let downloader = ImageDownloader(photo: photo)
+        downloader.completionBlock = {
+            if downloader.cancelled {
+                return
+            }
+            self.downloadsInProgress.removeValueForKey(photo.url.absoluteString!)
+            self.photoDictionary.insert(photo.url.absoluteString!)
+            if !downloader.cancelled{
+                self.delegate?.loadPhoto(photo)
+
             }
         }
+        self.downloadsInProgress[photo.url.absoluteString!] = downloader
+
+        self.downloadQueue.addOperation(downloader)
+    }
+    
+    func retrieveImages(photos : [Photo]){
+        for photo in photos{
+            if !self.photoDictionary.contains(photo.url.absoluteString!){
+                self.startDownloadForRecord(photo)
+            }
+        }
+        if photos.count <= 0{
+            self.delegate?.apiError()
+        }
+    }
+    
+    func cancelAllRequests(){
+        self.apiCallQueue.cancelAllOperations()
+        self.downloadQueue.cancelAllOperations()
+        self.downloadsInProgress.removeAll(keepCapacity: true)
+        self.apiCallsInProgress.removeAll(keepCapacity: true)
     }
     
 

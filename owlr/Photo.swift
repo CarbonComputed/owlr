@@ -8,26 +8,23 @@
 
 import Foundation
 import UIKit
-import SwifteriOS
 
+enum PhotoState {
+    case New, Downloaded, Failed
+}
 class Photo {
 
-    var photo : UIImage?
-    var url : String?
-    var jsonData : [String : JSONValue]
-    var id : String?
+    var image : UIImage?
+    var url : NSURL
+    var id : String
     var text : String?
+    var state = PhotoState.New
 
-    init(id : String, photo : UIImage, jsonData : [String : JSONValue], url: String){
-        self.photo = photo
-        self.jsonData = jsonData
-        self.url = url
+    init(id : String, url: NSURL, text: String?){
         self.id = id
-        let url2 = jsonData["entities"]?["media"][0]["display_url"]
-        
-        self.text = (self.jsonData["text"]?.string)?.stringByReplacingOccurrencesOfString(" ?http://.*", withString: "", options: NSStringCompareOptions.RegularExpressionSearch, range: nil)
-
-        println(self.text)
+        self.image = nil
+        self.url = url
+        self.text = text
     }
 
 

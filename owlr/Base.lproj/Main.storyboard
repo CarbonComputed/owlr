@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="zsE-Td-yOH">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="zsE-Td-yOH">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Settings View Controller-->
         <scene sceneID="xnD-e1-AAy">
             <objects>
-                <viewController id="SVC-Yn-o1C" customClass="ViewController" customModule="owlr" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="SVC-Yn-o1C" customClass="SettingsViewController" customModule="owlr" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="rrF-qq-h0v"/>
                         <viewControllerLayoutGuide type="bottom" id="Ek1-YR-VLC"/>
@@ -32,13 +32,13 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="searchCircleTapped:" destination="SVC-Yn-o1C" eventType="touchUpInside" id="e3O-pt-bie"/>
+                                    <action selector="globeButtonPressed:" destination="SVC-Yn-o1C" eventType="touchUpInside" id="gOb-sM-h7C"/>
                                 </connections>
                             </button>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="55" minValue="1" maxValue="1000" translatesAutoresizingMaskIntoConstraints="NO" id="4VS-SM-Rr7">
                                 <rect key="frame" x="73" y="520" width="175" height="31"/>
                                 <connections>
-                                    <action selector="updateRadiusLabel:" destination="SVC-Yn-o1C" eventType="valueChanged" id="Vux-F2-Bwt"/>
+                                    <action selector="sliderValueChanged:" destination="SVC-Yn-o1C" eventType="valueChanged" id="odZ-rU-2xc"/>
                                 </connections>
                             </slider>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="55" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tgL-5f-pBi">
@@ -55,7 +55,7 @@
                                 <rect key="frame" x="0.0" y="69" width="320" height="447"/>
                                 <gestureRecognizers/>
                                 <connections>
-                                    <outletCollection property="gestureRecognizers" destination="mIS-ed-Ad6" appends="YES" id="yrx-Qb-3kL"/>
+                                    <outletCollection property="gestureRecognizers" destination="g0I-z8-JCI" appends="YES" id="t7c-xl-vu2"/>
                                 </connections>
                             </mapView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search Location" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MXm-IB-UfW">
@@ -84,16 +84,15 @@
                     </view>
                     <navigationItem key="navigationItem" id="EIe-w8-KA3"/>
                     <connections>
-                        <outlet property="button" destination="gfc-SB-yvg" id="R6D-vo-18A"/>
-                        <outlet property="mapView" destination="HHR-2l-dhu" id="EbS-eA-Ck4"/>
-                        <outlet property="radiusLabel" destination="tgL-5f-pBi" id="G9D-bQ-2k4"/>
-                        <outlet property="radiusSlider" destination="4VS-SM-Rr7" id="BVR-Oi-mPD"/>
+                        <outlet property="mapview" destination="HHR-2l-dhu" id="OC0-AM-nnr"/>
+                        <outlet property="radiusLabel" destination="tgL-5f-pBi" id="klT-Dn-ZZa"/>
+                        <outlet property="radiusSlider" destination="4VS-SM-Rr7" id="6Jm-Ff-fM7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SH4-Wk-B9p" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="mIS-ed-Ad6">
+                <tapGestureRecognizer id="g0I-z8-JCI">
                     <connections>
-                        <action selector="mapTapped:" destination="SVC-Yn-o1C" id="GiU-ta-7QC"/>
+                        <action selector="mapTapped:" destination="SVC-Yn-o1C" id="wqp-Nn-bcI"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
@@ -131,6 +130,7 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="infinite" image="OwlLogoNoBackground-01-1.png" translatesAutoresizingMaskIntoConstraints="NO" id="oqo-8V-Slp">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <gestureRecognizers/>
                             </imageView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e02-FO-JUx">
                                 <rect key="frame" x="0.0" y="485" width="320" height="83"/>
@@ -157,12 +157,11 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="circleTapped:" destination="w9h-tb-w8b" eventType="touchUpInside" id="Nd9-1w-Ue5"/>
-                                    <segue destination="SVC-Yn-o1C" kind="push" identifier="PushSegue" id="Max-rw-YEM"/>
+                                    <segue destination="SVC-Yn-o1C" kind="modal" identifier="SettingsSegue" id="3Fa-4K-Vpz"/>
                                 </connections>
                             </button>
-                            <activityIndicatorView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Thw-SM-0jb">
-                                <rect key="frame" x="16" y="28" width="37" height="37"/>
+                            <activityIndicatorView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="Thw-SM-0jb">
+                                <rect key="frame" x="16" y="28" width="20" height="20"/>
                             </activityIndicatorView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="#owlr" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dUc-R8-w3X">
                                 <rect key="frame" x="16" y="485" width="288" height="75"/>
@@ -191,16 +190,29 @@
                             <constraint firstItem="Thw-SM-0jb" firstAttribute="leading" secondItem="dUc-R8-w3X" secondAttribute="leading" id="uyo-zK-5sn"/>
                             <constraint firstItem="e02-FO-JUx" firstAttribute="top" secondItem="dUc-R8-w3X" secondAttribute="top" id="vxo-u6-uHq"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="5nt-OX-VfC" appends="YES" id="cae-KR-jJg"/>
+                            <outletCollection property="gestureRecognizers" destination="2q8-fF-KPK" appends="YES" id="qEi-aU-QBH"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="ddY-5l-KVm"/>
                     <connections>
-                        <outlet property="button" destination="nIa-cy-JxJ" id="Gtg-yP-BtC"/>
                         <outlet property="imageView" destination="oqo-8V-Slp" id="g6J-R5-Uvn"/>
                         <outlet property="loader" destination="Thw-SM-0jb" id="4bt-u7-lYa"/>
                         <outlet property="textView" destination="dUc-R8-w3X" id="1BK-k7-4el"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W2r-pb-Ub2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="left" id="5nt-OX-VfC">
+                    <connections>
+                        <action selector="swipedLeft:" destination="w9h-tb-w8b" id="VZh-4I-I4J"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="right" id="2q8-fF-KPK">
+                    <connections>
+                        <action selector="swipedRight:" destination="w9h-tb-w8b" id="Tt3-3C-Ota"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-1180" y="418"/>
         </scene>

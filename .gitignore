@@ -18,3 +18,5 @@ owlr.xcodeproj/project.pbxproj
 *.pbxproj
 
 *.xcbkptlist
+
+owlr/MapViewController.swift

@@ -13,6 +13,11 @@ let Twitter =
     "consumerKey": "***",
     "consumerSecret": "***"
 ]
+let Salesforce =
+[
+    "consumerKey": "***",
+    "consumerSecret": "***"
+]
 let Flickr =
 [
     "consumerKey": "***",
@@ -48,6 +53,11 @@ let Linkedin =
     "consumerKey": "***",
     "consumerSecret": "***"
 ]
+let Linkedin2 =
+[
+    "consumerKey": "***",
+    "consumerSecret": "***"
+]
 let Dropbox =
 [
     "consumerKey": "***",
@@ -58,3 +68,34 @@ let Dribbble =
     "consumerKey": "***",
     "consumerSecret": "***"
 ]
+let BitBucket =
+[
+    "consumerKey": "***",
+    "consumerSecret": "***"
+]
+let GoogleDrive =
+[
+    "consumerKey": "***",
+    "consumerSecret": "***"
+]
+let Smugmug =
+[
+    "consumerKey": "***",
+    "consumerSecret": "***"
+]
+let Intuit =
+[
+    "consumerKey": "***",
+    "consumerSecret": "***"
+]
+let Zaim =
+[
+    "consumerKey": "***",
+    "consumerSecret": "***"
+]
+let Tumblr =
+[
+    "consumerKey": "***",
+    "consumerSecret": "***"
+]
+
