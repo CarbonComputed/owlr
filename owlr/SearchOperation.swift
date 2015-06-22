@@ -16,6 +16,7 @@ class SearchOperation: NSOperation {
     
     var photos : [Photo] = []
 
+    //Hacky but works
     var ex : Bool = true
     var fin: Bool = false
     

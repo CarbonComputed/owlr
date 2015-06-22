@@ -47,7 +47,7 @@ class ViewController: UIViewController,CLLocationManagerDelegate,LocationChangeP
         if(currentLocation==nil){
             currentLocation = CLLocation(latitude: 37.331789, longitude: -122.029620)
         }
-        
+
         
     }
     override func viewDidLoad() {
@@ -58,7 +58,7 @@ class ViewController: UIViewController,CLLocationManagerDelegate,LocationChangeP
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         self.locationManager.distanceFilter  = 10.0
         locationManager.requestAlwaysAuthorization()
-    
+
     }
 
     func loadPhoto(photo: Photo){
@@ -114,6 +114,16 @@ class ViewController: UIViewController,CLLocationManagerDelegate,LocationChangeP
             
         case .AuthorizedAlways:
             println("Location Authorized")
+            if count(oauthswiftTwitter.client.credential.oauth_token) <= 0{
+                oauthswiftTwitter.authorizeWithCallbackURL( NSURL(string: "oauth-swift://oauth-callback/twitter")!, success: {
+                    credential, response in
+                    println(credential.oauth_token)
+                    println(credential.oauth_token_secret)
+                    }, failure: {(error:NSError!) -> Void in
+                        println(error)
+                })
+            }
+
             locationManager.startUpdatingLocation()
             break
             

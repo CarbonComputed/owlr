@@ -17,13 +17,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
-        oauthswiftTwitter.authorizeWithCallbackURL( NSURL(string: "oauth-swift://oauth-callback/twitter")!, success: {
-            credential, response in
-            println(credential.oauth_token)
-            println(credential.oauth_token_secret)
-            }, failure: {(error:NSError!) -> Void in
-                println(error)
-        })
+        var twitterCredData = NSUserDefaults.standardUserDefaults().objectForKey("twitter-cred") as! NSData?
+        
+        if twitterCredData != nil{
+            var credential = NSKeyedUnarchiver.unarchiveObjectWithData(twitterCredData!) as! OAuthSwiftCredential?
+            if credential != nil{
+                oauthswiftTwitter.client.credential = credential!
+            }
+        }
+
         // Override point for customization after application launch.
         return true
     }
@@ -49,10 +51,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate {
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        if count(oauthswiftTwitter.client.credential.oauth_token) > 0{
+           
+            var data = NSKeyedArchiver.archivedDataWithRootObject(oauthswiftTwitter.client.credential) as NSData
+            NSUserDefaults.standardUserDefaults().setObject(data, forKey: "twitter-cred")
+        }
+
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+
+
+        
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
