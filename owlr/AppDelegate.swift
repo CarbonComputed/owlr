@@ -17,12 +17,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
-        var twitterCredData = NSUserDefaults.standardUserDefaults().objectForKey("twitter-cred") as! NSData?
+        let twitterCredData = NSUserDefaults.standardUserDefaults().objectForKey("twitter-cred") as! NSData?
         
-        if twitterCredData != nil{
-            var credential = NSKeyedUnarchiver.unarchiveObjectWithData(twitterCredData!) as! OAuthSwiftCredential?
-            if credential != nil{
-                oauthswiftTwitter.client.credential = credential!
+        if (twitterCredData != nil) {
+            let credential = NSKeyedUnarchiver.unarchiveObjectWithData(twitterCredData!) as! OAuthSwiftCredential?
+            if (credential != nil) {
+                print("this is nil")
+                //oauthswiftTwitter.client.credential = credential!
             }
         }
 
@@ -30,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate {
         return true
     }
 
-    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
         if (url.host == "oauth-callback") {
             if (url.path!.hasPrefix("/twitter") || url.path!.hasPrefix("/flickr") || url.path!.hasPrefix("/fitbit")
                 || url.path!.hasPrefix("/withings") || url.path!.hasPrefix("/linkedin")) {
@@ -51,9 +52,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate {
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-        if count(oauthswiftTwitter.client.credential.oauth_token) > 0{
+        if oauthswiftTwitter.client.credential.oauth_token.characters.count > 0{
            
-            var data = NSKeyedArchiver.archivedDataWithRootObject(oauthswiftTwitter.client.credential) as NSData
+            let data = NSKeyedArchiver.archivedDataWithRootObject(oauthswiftTwitter.client.credential) as NSData
             NSUserDefaults.standardUserDefaults().setObject(data, forKey: "twitter-cred")
         }
 
@@ -81,7 +82,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate {
     lazy var applicationDocumentsDirectory: NSURL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "CarbonComputed.owlr" in the application's documents Application Support directory.
         let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-        return urls[urls.count-1] as! NSURL
+        return urls[urls.count-1] 
     }()
 
     lazy var managedObjectModel: NSManagedObjectModel = {
@@ -97,19 +98,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate {
         let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("owlr.sqlite")
         var error: NSError? = nil
         var failureReason = "There was an error creating or loading the application's saved data."
-        if coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil, error: &error) == nil {
-            coordinator = nil
-            // Report any error we got.
-            let dict = NSMutableDictionary()
-            dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data"
-            dict[NSLocalizedFailureReasonErrorKey] = failureReason
-            dict[NSUnderlyingErrorKey] = error
-            error = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict as [NSObject : AnyObject])
-            // Replace this with code to handle the error appropriately.
-            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog("Unresolved error \(error), \(error!.userInfo)")
-            abort()
+        
+        do {
+            try coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil)
+            
         }
+        catch {
+            return coordinator
+        }
+        
+        coordinator = nil
+        // Report any error we got.
+        let dict = NSMutableDictionary()
+        dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data"
+        dict[NSLocalizedFailureReasonErrorKey] = failureReason
+        dict[NSUnderlyingErrorKey] = error
+        error = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict as [NSObject : AnyObject])
+        // Replace this with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+        NSLog("Unresolved error \(error), \(error!.userInfo)")
+        abort()
         
         return coordinator
     }()
@@ -129,11 +137,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIWebViewDelegate {
 
     func saveContext () {
         if let moc = self.managedObjectContext {
-            var error: NSError? = nil
-            if moc.hasChanges && !moc.save(&error) {
+            if moc.hasChanges {
+                
+                do {
+                    try moc.save()
+                }
+                catch {
+                    return
+                }
+                
                 // Replace this implementation with code to handle the error appropriately.
                 // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                NSLog("Unresolved error \(error), \(error!.userInfo)")
+                NSLog("Unresolved error: saving context")
                 abort()
             }
         }

@@ -52,7 +52,7 @@ class APIController  {
             if searchOp.cancelled {
                 return
             }
-            println("API Call Completed")
+            print("API Call Completed")
             self.apiCallsInProgress.removeValueForKey(searchOp.toString())
 
             if searchOp.photos.count > 0{
@@ -65,13 +65,13 @@ class APIController  {
             }
 
         }
-        println("API Call Added")
+        print("API Call Added")
         self.apiCallsInProgress[searchOp.toString()] = searchOp
         self.apiCallQueue.addOperation(searchOp)
     }
 
     func startDownloadForRecord(photo: Photo){
-        if let downloadOperation = downloadsInProgress[photo.url.absoluteString!] {
+        if let _ = downloadsInProgress[photo.url.absoluteString] {
             return
         }
         
@@ -80,21 +80,21 @@ class APIController  {
             if downloader.cancelled {
                 return
             }
-            self.downloadsInProgress.removeValueForKey(photo.url.absoluteString!)
-            self.photoDictionary.insert(photo.url.absoluteString!)
+            self.downloadsInProgress.removeValueForKey(photo.url.absoluteString)
+            self.photoDictionary.insert(photo.url.absoluteString)
             if !downloader.cancelled{
                 self.delegate?.loadPhoto(photo)
 
             }
         }
-        self.downloadsInProgress[photo.url.absoluteString!] = downloader
+        self.downloadsInProgress[photo.url.absoluteString] = downloader
 
         self.downloadQueue.addOperation(downloader)
     }
     
     func retrieveImages(photos : [Photo]){
         for photo in photos{
-            if !self.photoDictionary.contains(photo.url.absoluteString!){
+            if !self.photoDictionary.contains(photo.url.absoluteString){
                 self.startDownloadForRecord(photo)
             }
         }

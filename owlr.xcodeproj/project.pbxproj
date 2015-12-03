@@ -15,7 +15,6 @@
 		3FF8CB081A86CD0B0067D0B2 /* earthButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FF8CB071A86CD0B0067D0B2 /* earthButton.png */; };
 		3FF8CB0D1A870DB20067D0B2 /* searchButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FF8CB0C1A870DB20067D0B2 /* searchButton.png */; };
 		3FF8CB131A8716B40067D0B2 /* OwlLogoNoBackground-01-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FF8CB121A8716B40067D0B2 /* OwlLogoNoBackground-01-1.png */; };
-		7086EBC11B353A0300BAF925 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7086EBC01B353A0300BAF925 /* SwiftyJSON.swift */; };
 		7086EBC31B353C7B00BAF925 /* OAuthData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7086EBC21B353C7B00BAF925 /* OAuthData.swift */; };
 		70D334091A83BAE2006A86D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D334081A83BAE2006A86D1 /* AppDelegate.swift */; };
 		70D3340C1A83BAE2006A86D1 /* owlr.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 70D3340A1A83BAE2006A86D1 /* owlr.xcdatamodeld */; };
@@ -34,6 +33,9 @@
 		70F3ABA31B35DBA9003F2EF3 /* SearchOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F3ABA21B35DBA9003F2EF3 /* SearchOperation.swift */; };
 		70F3ABA81B35E304003F2EF3 /* TwitterSearchOp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F3ABA71B35E304003F2EF3 /* TwitterSearchOp.swift */; };
 		70F3ABAA1B35F07A003F2EF3 /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F3ABA91B35F07A003F2EF3 /* ImageDownloader.swift */; };
+		FAFB36741C10B0C4004D2775 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAFB36731C10B0C4004D2775 /* SwiftyJSON.framework */; };
+		FAFB36751C10D60B004D2775 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAFB36731C10B0C4004D2775 /* SwiftyJSON.framework */; };
+		FAFB36761C10D60B004D2775 /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAFB36731C10B0C4004D2775 /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +81,20 @@
 			remoteGlobalIDString = F43502791A6791B200038A29;
 			remoteInfo = OAuthSwift;
 		};
+		FAFB366F1C10B0B3004D2775 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 70D5B70C1A8827790037F137 /* OAuthSwift.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C4B6EE1E1BF74CE300443596;
+			remoteInfo = OAuthSwiftTVOS;
+		};
+		FAFB36711C10B0B3004D2775 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 70D5B70C1A8827790037F137 /* OAuthSwift.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C4D50DF71BFB693F0053B624;
+			remoteInfo = OAuthSwiftTests;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -88,6 +104,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				FAFB36761C10D60B004D2775 /* SwiftyJSON.framework in Embed Frameworks */,
 				70D5B7191A88279F0037F137 /* OAuthSwift.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -104,7 +121,6 @@
 		3FF8CB071A86CD0B0067D0B2 /* earthButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = earthButton.png; sourceTree = "<group>"; };
 		3FF8CB0C1A870DB20067D0B2 /* searchButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = searchButton.png; sourceTree = "<group>"; };
 		3FF8CB121A8716B40067D0B2 /* OwlLogoNoBackground-01-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "OwlLogoNoBackground-01-1.png"; sourceTree = "<group>"; };
-		7086EBC01B353A0300BAF925 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		7086EBC21B353C7B00BAF925 /* OAuthData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuthData.swift; sourceTree = "<group>"; };
 		70D334031A83BAE2006A86D1 /* owlr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = owlr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		70D334071A83BAE2006A86D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -126,6 +142,7 @@
 		70F3ABA21B35DBA9003F2EF3 /* SearchOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchOperation.swift; sourceTree = "<group>"; };
 		70F3ABA71B35E304003F2EF3 /* TwitterSearchOp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterSearchOp.swift; sourceTree = "<group>"; };
 		70F3ABA91B35F07A003F2EF3 /* ImageDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDownloader.swift; sourceTree = "<group>"; };
+		FAFB36731C10B0C4004D2775 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SwiftyJSON.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,9 +150,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAFB36741C10B0C4004D2775 /* SwiftyJSON.framework in Frameworks */,
 				70D5B6CB1A86C4590037F137 /* MapKit.framework in Frameworks */,
 				70D3342C1A8442E0006A86D1 /* CoreLocation.framework in Frameworks */,
 				70D5B7181A88279F0037F137 /* OAuthSwift.framework in Frameworks */,
+				FAFB36751C10D60B004D2775 /* SwiftyJSON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -153,6 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				70D5B70C1A8827790037F137 /* OAuthSwift.xcodeproj */,
+				FAFB36731C10B0C4004D2775 /* SwiftyJSON.framework */,
 				70D5B6CA1A86C4590037F137 /* MapKit.framework */,
 				70D3342B1A8442E0006A86D1 /* CoreLocation.framework */,
 				70D334051A83BAE2006A86D1 /* owlr */,
@@ -173,7 +193,6 @@
 		70D334051A83BAE2006A86D1 /* owlr */ = {
 			isa = PBXGroup;
 			children = (
-				7086EBC01B353A0300BAF925 /* SwiftyJSON.swift */,
 				3F61525D1A85BE8F00990F99 /* ImageLoader.swift */,
 				3F61525E1A85BE8F00990F99 /* Photo.swift */,
 				70D334421A847664006A86D1 /* images */,
@@ -236,10 +255,12 @@
 		70D5B70D1A8827790037F137 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				70D5B7121A88277A0037F137 /* OAuthSwiftDemo.app */,
 				70D5B7141A88277A0037F137 /* OAuthSwift.framework */,
+				70D5B7121A88277A0037F137 /* OAuthSwiftDemo.app */,
+				7086EBBF1B35379600BAF925 /* OAuthSwift.framework */,
 				7086EBBD1B35379600BAF925 /* OAuthSwiftOSXDemo.app */,
-				7086EBBF1B35379600BAF925 /* OAuthSwiftOSX.framework */,
+				FAFB36701C10B0B3004D2775 /* OAuthSwiftTVOS.framework */,
+				FAFB36721C10B0B3004D2775 /* OAuthSwiftTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -290,12 +311,13 @@
 		70D333FB1A83BAE2006A86D1 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastSwiftUpdateCheck = 0720;
+				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Kevin Carbone";
 				TargetAttributes = {
 					70D334021A83BAE2006A86D1 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = Q3LK4635JF;
+						DevelopmentTeam = 9Y64U79X82;
 					};
 					70D3341A1A83BAE3006A86D1 = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -337,10 +359,10 @@
 			remoteRef = 7086EBBC1B35379600BAF925 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		7086EBBF1B35379600BAF925 /* OAuthSwiftOSX.framework */ = {
+		7086EBBF1B35379600BAF925 /* OAuthSwift.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = OAuthSwiftOSX.framework;
+			path = OAuthSwift.framework;
 			remoteRef = 7086EBBE1B35379600BAF925 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -356,6 +378,20 @@
 			fileType = wrapper.framework;
 			path = OAuthSwift.framework;
 			remoteRef = 70D5B7131A88277A0037F137 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FAFB36701C10B0B3004D2775 /* OAuthSwiftTVOS.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = OAuthSwiftTVOS.framework;
+			remoteRef = FAFB366F1C10B0B3004D2775 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FAFB36721C10B0B3004D2775 /* OAuthSwiftTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = OAuthSwiftTests.xctest;
+			remoteRef = FAFB36711C10B0B3004D2775 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -396,7 +432,6 @@
 				70F3ABA31B35DBA9003F2EF3 /* SearchOperation.swift in Sources */,
 				3F28F9081A84409100786801 /* APIController.swift in Sources */,
 				70D5B6D41A86C6810037F137 /* SettingsViewController.swift in Sources */,
-				7086EBC11B353A0300BAF925 /* SwiftyJSON.swift in Sources */,
 				70D3340E1A83BAE3006A86D1 /* ViewController.swift in Sources */,
 				70F3ABA81B35E304003F2EF3 /* TwitterSearchOp.swift in Sources */,
 				7086EBC31B353C7B00BAF925 /* OAuthData.swift in Sources */,
@@ -470,6 +505,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -537,8 +573,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = owlr/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "carboncomputed.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -550,8 +591,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = owlr/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "carboncomputed.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -573,6 +619,7 @@
 				);
 				INFOPLIST_FILE = owlrTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "CarbonComputed.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/owlr.app/owlr";
@@ -591,6 +638,7 @@
 				);
 				INFOPLIST_FILE = owlrTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "CarbonComputed.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/owlr.app/owlr";

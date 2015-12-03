@@ -24,18 +24,18 @@ class SettingsViewController: UIViewController{
     @IBOutlet weak var radiusSlider: UISlider!
     
     @IBOutlet weak var radiusLabel: UILabel!
-    required init(coder aDecoder: NSCoder) {
-        super.init(coder : aDecoder)
-
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
     }
     
     override func viewDidLoad(){
         super.viewDidLoad()
-        var coord = self.currentLocation?.coordinate
+        let coord = self.currentLocation?.coordinate
         self.mapview.centerCoordinate = coord!
-        var ann = MKPointAnnotation()
+        let ann = MKPointAnnotation()
         ann.coordinate = coord!
-        var currentLocation = CLLocation(latitude: ann.coordinate.latitude, longitude: ann.coordinate.longitude)
+        let currentLocation = CLLocation(latitude: ann.coordinate.latitude, longitude: ann.coordinate.longitude)
         self.currentLocation = currentLocation
         mapview.removeAnnotations(mapview.annotations)
         mapview.addAnnotation(ann)
@@ -63,11 +63,11 @@ class SettingsViewController: UIViewController{
     
     @IBAction func mapTapped(sender: UITapGestureRecognizer) {
         
-            var point = sender.locationInView(self.mapview)
-            var tapPoint = self.mapview.convertPoint(point, toCoordinateFromView: self.mapview)
-            var ann = MKPointAnnotation()
+            let point = sender.locationInView(self.mapview)
+            let tapPoint = self.mapview.convertPoint(point, toCoordinateFromView: self.mapview)
+            let ann = MKPointAnnotation()
             ann.coordinate = tapPoint
-            var currentLocation = CLLocation(latitude: ann.coordinate.latitude, longitude: ann.coordinate.longitude)
+            let currentLocation = CLLocation(latitude: ann.coordinate.latitude, longitude: ann.coordinate.longitude)
             self.currentLocation = currentLocation
             mapview.removeAnnotations(mapview.annotations)
             mapview.addAnnotation(ann)
