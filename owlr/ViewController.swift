@@ -14,7 +14,7 @@ protocol LocationChangeProtocol{
     func didUpdateLocation(location : CLLocation, radius : Double)
 }
 
-class ViewController: UIViewController,CLLocationManagerDelegate,LocationChangeProtocol,APIControllerProtocol {
+class ViewController: UIViewController, CLLocationManagerDelegate, LocationChangeProtocol, APIControllerProtocol {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var textView: UITextView!
@@ -39,123 +39,119 @@ class ViewController: UIViewController,CLLocationManagerDelegate,LocationChangeP
     
     var defaultImage : UIImage?
     
-    
-    required init(coder aDecoder: NSCoder) {
-        super.init(coder : aDecoder)
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
         self.apiController = APIController()
         self.apiController?.delegate = self
         if(currentLocation==nil){
             currentLocation = CLLocation(latitude: 37.331789, longitude: -122.029620)
         }
-
-        
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.defaultImage = self.imageView.image
         locationManager = CLLocationManager()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         self.locationManager.distanceFilter  = 10.0
         locationManager.requestAlwaysAuthorization()
-
     }
 
-    func loadPhoto(photo: Photo){
+    func loadPhoto(photo: Photo) {
         self.photoQueue.append(photo)
-        if self.waitingForNext{
+        if self.waitingForNext {
             self.waitingForNext = false
             self.currentIndex += 1
             self.refreshPhotos()
-
         }
+        
         if apiController?.downloadsInProgress.count == 0 && apiController?.apiCallsInProgress.count == 0{
             self.loader.stopAnimating()
         }
     }
     
-    func apiError(){
+    func apiError() {
         if apiController?.downloadsInProgress.count == 0 && apiController?.apiCallsInProgress.count == 0{
             self.loader.stopAnimating()
         }
     }
     
-    func refreshPhotos(){
+    func refreshPhotos() {
         if photoQueue.count == 0{
             self.imageView.image = self.defaultImage
             self.textView.text = ""
         }
         else if currentIndex < photoQueue.count{
             dispatch_async(dispatch_get_main_queue()) {
-                UIView.transitionWithView(self.imageView,
-                    duration:0.6,
-                    options: .TransitionCrossDissolve,
-                    animations: { self.imageView.image = self.photoQueue[self.currentIndex].image},
-                    completion:{ (Bool) in
-                        self.textView.text = self.photoQueue[self.currentIndex].text
-                        self.textView.textColor = UIColor.whiteColor()
-                    })
-
+                UIView.transitionWithView( self.imageView,
+                                           duration:0.6,
+                                           options: .TransitionCrossDissolve,
+                                           animations: { self.imageView.image = self.photoQueue[self.currentIndex].image},
+                                           completion: { (Bool) in
+                                                self.textView.text = self.photoQueue[self.currentIndex].text
+                                                self.textView.textColor = UIColor.whiteColor()
+                                           }
+                )
             }
-
-            
         }
     }
 
-
-    
-    func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        println("didChangeAuthorizationStatus")
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        print("didChangeAuthorizationStatus")
         
         switch status {
-        case .NotDetermined:
-            println(".NotDetermined")
-            break
-            
-        case .AuthorizedAlways:
-            println("Location Authorized")
-            if count(oauthswiftTwitter.client.credential.oauth_token) <= 0{
-                oauthswiftTwitter.authorizeWithCallbackURL( NSURL(string: "oauth-swift://oauth-callback/twitter")!, success: {
-                    credential, response in
-                    println(credential.oauth_token)
-                    println(credential.oauth_token_secret)
-                    }, failure: {(error:NSError!) -> Void in
-                        println(error)
-                })
-            }
+            case .NotDetermined:
+                print(".NotDetermined")
+                break
+                
+            case .AuthorizedAlways:
+                print("Location Authorized")
+                if ( oauthswiftTwitter.client.credential.oauth_token.characters.count <= 0 ) {
+                    
+                    oauthswiftTwitter.authorizeWithCallbackURL(
+                        NSURL(string: "oauth-swift://oauth-callback/twitter")!,
+                        
+                        success: { (credential, response, parameters) -> Void in
+                            print(credential.oauth_token)
+                            print(credential.oauth_token_secret)
+                        
+                        }, failure: { (error) -> Void in
+                           print(error)
+                    })
+                }
 
-            locationManager.startUpdatingLocation()
-            break
-            
-        case .Denied:
-            println(".Denied")
-            break
-            
-        default:
-            println("Unhandled authorization status")
-            break
-            
+                locationManager.startUpdatingLocation()
+                break
+                
+            case .Denied:
+                print(".Denied")
+                break
+                
+            default:
+                print("Unhandled authorization status")
+                break
         }
     }
     
     func loadNewImages(){
-        var long = self.currentLocation?.coordinate.longitude
-        var lat = self.currentLocation?.coordinate.latitude
+        let long = self.currentLocation?.coordinate.longitude
+        let lat = self.currentLocation?.coordinate.latitude
         self.loader.startAnimating()
         self.apiController!.loadAPIRequest(lat!, long: long!,radius: self.currentRadius ,count: 5, maxId : currentMax)
     }
     
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-        let location = locations.last as! CLLocation
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         self.locationManager.stopUpdatingLocation()
-        self.didUpdateLocation(location, radius: self.currentRadius)
-        
+        self.didUpdateLocation(locations.last!, radius: self.currentRadius)
     }
 
     func didUpdateLocation(location : CLLocation, radius: Double){
         self.currentLocation = location
         self.currentRadius = radius
-        println("didUpdateLocations:  \(location.coordinate.latitude), \(location.coordinate.longitude)")
+        print("didUpdateLocations:  \(location.coordinate.latitude), \(location.coordinate.longitude)")
         
         self.apiController?.cancelAllRequests()
         self.currentMax = nil
@@ -172,8 +168,6 @@ class ViewController: UIViewController,CLLocationManagerDelegate,LocationChangeP
         // Dispose of any resources that can be recreated.
     }
     
-    
-
     @IBAction func swipedLeft(sender: UISwipeGestureRecognizer) {
         if self.currentIndex + 1 < self.photoQueue.count{
             self.currentIndex += 1
@@ -203,7 +197,7 @@ class ViewController: UIViewController,CLLocationManagerDelegate,LocationChangeP
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         if (segue.identifier == "SettingsSegue") {
             // pass data to next view
-            var next = segue.destinationViewController as! SettingsViewController
+            let next = segue.destinationViewController as! SettingsViewController
             next.locationDelegate = self
             next.currentLocation = self.currentLocation
             next.radius = self.currentRadius

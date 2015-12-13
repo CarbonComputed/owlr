@@ -8,6 +8,7 @@
 
 import UIKit
 import OAuthSwift
+import SwiftyJSON
 
 class SearchOperation: NSOperation {
     let baseURL : String
@@ -48,7 +49,6 @@ class SearchOperation: NSOperation {
             success: {
                 data, response in
                 
-                var parsingError: NSError?
                 if let json = JSON(data : data) as JSON?{
                     self.handleJSON(json)
                     self.willChangeValueForKey("isExecuting")
@@ -61,10 +61,10 @@ class SearchOperation: NSOperation {
 
                 }
                 else{
-                    println("An error occured parsing JSON")
+                    print("An error occured parsing JSON")
                 }
             }, failure: {(error:NSError!) -> Void in
-                println(error)
+                print(error)
                 self.willChangeValueForKey("isExecuting")
                 self.willChangeValueForKey("isFinished")
                 self.ex = false
@@ -94,7 +94,7 @@ class SearchOperation: NSOperation {
     }
     
     func handleJSON(json : JSON){
-        println("Abstract, should be overrwritten by provider")
+        print("Abstract, should be overrwritten by provider")
 
     }
 
