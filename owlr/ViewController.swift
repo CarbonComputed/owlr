@@ -114,7 +114,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, LocationChang
                     oauthswiftTwitter.authorizeWithCallbackURL(
                         NSURL(string: "oauth-swift://oauth-callback/twitter")!,
                         
-                        success: { (credential, response, parameters) -> Void in
+                        success: { (credential, response) -> Void in
                             print(credential.oauth_token)
                             print(credential.oauth_token_secret)
                         
